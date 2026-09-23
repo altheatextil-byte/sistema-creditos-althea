@@ -15,14 +15,17 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///solicitudes.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
-# --- CONFIGURACIÓN DEL CORREO ---
-app.config['MAIL_SERVER'] = 'smtp.gmail.com'
-app.config['MAIL_PORT'] = 587
-app.config['MAIL_USE_TLS'] = True
-app.config['MAIL_USERNAME'] = 'altheatextil@gmail.com'
-app.config['MAIL_PASSWORD'] = 'oavf ocgl dafx stqd'  # <-- Pon aquí tu contraseña de aplicación
-app.config['MAIL_DEFAULT_SENDER'] = 'altheatextil@gmail.com'
-mail = Mail(app)
+# --- CONFIGURACIÓN DEL CORREO (Optimizada para Render) ---
+def configurar_correo():
+    app.config['MAIL_SERVER'] = 'smtp.gmail.com'
+    app.config['MAIL_PORT'] = 587
+    app.config['MAIL_USE_TLS'] = True
+    app.config['MAIL_USERNAME'] = os.environ.get('MAIL_USERNAME', 'altheatextil@gmail.com')
+    app.config['MAIL_PASSWORD'] = os.environ.get('MAIL_PASSWORD', '')
+    app.config['MAIL_DEFAULT_SENDER'] = 'altheatextil@gmail.com'
+    return Mail(app)
+
+mail = configurar_correo()
 
 ADMIN_USER = "admin"
 ADMIN_PASS = "althea2026"
@@ -192,34 +195,7 @@ def enviar_solicitud():
     db.session.add(nueva)
     db.session.commit()
     
-    try:
-        msg = Message(
-            subject=f"Nueva Solicitud de Crédito - {nueva.razon_social}",
-            recipients=['altheatextil@gmail.com']
-        )
-        msg.html = f"""
-        <div style="font-family: Arial, sans-serif; max-width: 650px; margin: auto; border: 1px solid #ddd; border-radius: 8px; overflow: hidden;">
-            <div style="background-color: #1a1a2e; padding: 20px; text-align: center;">
-                <h1 style="color: #c9a05b; margin: 0;">ALTHEA</h1>
-                <p style="color: white; margin: 5px 0 0 0;">Nueva Solicitud de Crédito</p>
-            </div>
-            <div style="padding: 30px; background-color: #f9f9f9;">
-                <h2 style="color: #1a1a2e;">Resumen de la Solicitud</h2>
-                <table style="width: 100%; border-collapse: collapse; margin-top: 15px;">
-                    <tr><td style="padding: 8px; border-bottom: 1px solid #ddd;"><strong>Empresa:</strong></td><td style="padding: 8px; border-bottom: 1px solid #ddd;">{nueva.razon_social}</td></tr>
-                    <tr><td style="padding: 8px; border-bottom: 1px solid #ddd;"><strong>NIT:</strong></td><td style="padding: 8px; border-bottom: 1px solid #ddd;">{nueva.nit}</td></tr>
-                    <tr><td style="padding: 8px; border-bottom: 1px solid #ddd;"><strong>Representante:</strong></td><td style="padding: 8px; border-bottom: 1px solid #ddd;">{nueva.rep_nombre}</td></tr>
-                    <tr><td style="padding: 8px; border-bottom: 1px solid #ddd;"><strong>Cupo Solicitado:</strong></td><td style="padding: 8px; border-bottom: 1px solid #ddd;">{nueva.cupo_solicitado}</td></tr>
-                </table>
-                <br>
-                <a href="http://127.0.0.1:5000/panel" style="background-color: #c9a05b; color: #1a1a2e; padding: 12px 25px; text-decoration: none; border-radius: 5px; font-weight: bold;">Ver en el Panel</a>
-            </div>
-        </div>
-        """
-        mail.send(msg)
-    except Exception as e:
-        print(f"Error al enviar correo: {e}")
-    
+        
     return render_template('exito.html', nombre=nueva.razon_social)
 
 @app.route('/login', methods=['GET', 'POST'])
