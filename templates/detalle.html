@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Detalle Solicitud - Althea</title>
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; background-color: #f4f4f4; margin: 0; padding-bottom: 50px; }
+        header { background-color: #1a1a2e; color: white; padding: 20px; text-align: center; border-bottom: 4px solid #c9a05b; }
+        .container { max-width: 900px; margin: 30px auto; background: white; padding: 30px; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        h2 { color: #1a1a2e; border-bottom: 2px solid #c9a05b; padding-bottom: 10px; }
+        h3 { color: #c9a05b; margin-top: 25px; }
+        p { margin: 8px 0; }
+        strong { color: #1a1a2e; }
+        .acciones { margin-top: 30px; text-align: center; }
+        .btn { padding: 10px 20px; text-decoration: none; border-radius: 5px; font-weight: bold; color: white; margin: 0 5px; }
+        .btn-aprobar { background-color: #27ae60; }
+        .btn-rechazar { background-color: #e74c3c; }
+        .btn-volver { background-color: #7f8c8d; }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Detalle de la Solicitud</h1>
+    </header>
+    <div class="container">
+        <h2>{{ s.razon_social }}</h2>
+        <p><strong>Estado:</strong> {{ s.estado }}</p>
+        <p><strong>Fecha:</strong> {{ s.fecha.strftime('%d/%m/%Y %H:%M') }}</p>
+
+        <h3>1. Información General</h3>
+        <p><strong>NIT:</strong> {{ s.nit }} | <strong>Nombre Comercial:</strong> {{ s.nombre_comercial }}</p>
+        <p><strong>Actividad:</strong> {{ s.actividad_economica }}</p>
+        <p><strong>Dirección:</strong> {{ s.direccion }}, {{ s.ciudad }}, {{ s.departamento }}</p>
+        <p><strong>Teléfono:</strong> {{ s.telefono }} | <strong>Correo:</strong> {{ s.correo }}</p>
+        <p><strong>Constitución:</strong> {{ s.fecha_constitucion }} | <strong>Empleados:</strong> {{ s.num_empleados }} | <strong>Tipo:</strong> {{ s.tipo_empresa }}</p>
+
+        <h3>2. Representante Legal</h3>
+        <p><strong>Nombre:</strong> {{ s.rep_nombre }} ({{ s.rep_documento }})</p>
+        <p><strong>Cargo:</strong> {{ s.rep_cargo }} | <strong>Teléfono:</strong> {{ s.rep_telefono }}</p>
+        <p><strong>Correo:</strong> {{ s.rep_correo }} | <strong>Dirección:</strong> {{ s.rep_direccion }}</p>
+
+        <h3>3. Información Tributaria</h3>
+        <p><strong>Régimen:</strong> {{ s.regimen_tributario }} | <strong>Responsabilidades:</strong> {{ s.responsabilidades }}</p>
+        <p><strong>Responsable IVA:</strong> {{ s.responsable_iva }} | <strong>Cámara:</strong> {{ s.camara_comercio }}</p>
+        <p><strong>Matrícula:</strong> {{ s.fecha_matricula }} | <strong>Renovación:</strong> {{ s.fecha_renovacion }}</p>
+        <p><strong>Compras a crédito:</strong> {{ s.compras_credito }} | <strong>Plazo:</strong> {{ s.plazo_habitual }}</p>
+
+        <h3>4. Información Financiera</h3>
+        <p><strong>Ventas:</strong> {{ s.ventas_mensuales }} | <strong>Activos:</strong> {{ s.activos }} | <strong>Pasivos:</strong> {{ s.pasivos }} | <strong>Patrimonio:</strong> {{ s.patrimonio }}</p>
+        <p><strong>Bancos:</strong> {{ s.bancos }} | <strong>Antigüedad:</strong> {{ s.antiguedad_bancaria }}</p>
+        <p><strong>Obligaciones:</strong> {{ s.obligaciones }} | <strong>Mora:</strong> {{ s.mora }}</p>
+
+        <h3>5. Solicitud de Crédito</h3>
+        <p><strong>Cupo:</strong> {{ s.cupo_solicitado }} | <strong>Plazo:</strong> {{ s.plazo_solicitado }}</p>
+        <p><strong>Productos:</strong> {{ s.tipo_productos }} | <strong>Frecuencia:</strong> {{ s.frecuencia_compra }}</p>
+        <p><strong>Valor compras:</strong> {{ s.valor_compras }}</p>
+
+        <h3>6. Referencias Comerciales</h3>
+        <p><strong>Ref 1:</strong> {{ s.ref1_empresa }} - {{ s.ref1_contacto }} ({{ s.ref1_cargo }}) | Tel: {{ s.ref1_telefono }} | Correo: {{ s.ref1_correo }} | Tiempo: {{ s.ref1_tiempo }}</p>
+        <p><strong>Ref 2:</strong> {{ s.ref2_empresa }} - {{ s.ref2_contacto }} ({{ s.ref2_cargo }}) | Tel: {{ s.ref2_telefono }} | Correo: {{ s.ref2_correo }} | Tiempo: {{ s.ref2_tiempo }}</p>
+
+        <div class="acciones">
+            <a href="/cambiar_estado/{{ s.id }}/Aprobado" class="btn btn-aprobar">✅ Aprobar</a>
+            <a href="/cambiar_estado/{{ s.id }}/Rechazado" class="btn btn-rechazar">❌ Rechazar</a>
+            <a href="/panel" class="btn btn-volver">← Volver al Panel</a>
+        </div>
+    </div>
+</body>
+</html>

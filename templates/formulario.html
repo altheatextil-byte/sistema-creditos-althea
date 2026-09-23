@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solicitud de Crédito - Althea</title>
+    <style>
+        :root {
+            --azul-oscuro: #1a1a2e;
+            --dorado: #c9a05b;
+            --gris-fondo: #f4f4f4;
+            --blanco: #ffffff;
+            --texto: #333333;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--gris-fondo);
+            color: var(--texto);
+            line-height: 1.6;
+            padding-bottom: 50px;
+        }
+
+        header {
+            background-color: var(--azul-oscuro);
+            color: var(--blanco);
+            padding: 30px 20px;
+            text-align: center;
+            border-bottom: 5px solid var(--dorado);
+        }
+
+        header img {
+            max-width: 180px;
+            margin-bottom: 15px;
+        }
+
+        header h1 {
+            font-size: 1.8em;
+            letter-spacing: 1px;
+        }
+
+        header p {
+            color: var(--dorado);
+            font-size: 1em;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        .aviso {
+            background-color: #fff3cd;
+            border-left: 5px solid var(--dorado);
+            padding: 15px;
+            margin-bottom: 30px;
+            border-radius: 5px;
+            font-size: 0.9em;
+            color: #856404;
+        }
+
+        form {
+            background-color: var(--blanco);
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+        }
+
+        .seccion {
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #eee;
+        }
+
+        .seccion:last-of-type {
+            border-bottom: none;
+        }
+
+        .seccion h2 {
+            color: var(--azul-oscuro);
+            font-size: 1.3em;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid var(--dorado);
+            display: inline-block;
+        }
+
+        .fila {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-bottom: 15px;
+        }
+
+        .campo {
+            flex: 1;
+            min-width: 250px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .campo label {
+            font-weight: bold;
+            font-size: 0.9em;
+            margin-bottom: 5px;
+            color: var(--azul-oscuro);
+        }
+
+        .campo input, .campo select, .campo textarea {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 1em;
+            font-family: inherit;
+            transition: border-color 0.3s;
+        }
+
+        .campo input:focus, .campo select:focus, .campo textarea:focus {
+            outline: none;
+            border-color: var(--dorado);
+            box-shadow: 0 0 5px rgba(201, 160, 91, 0.3);
+        }
+
+        .radio-group {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-top: 5px;
+        }
+
+        .radio-group label {
+            font-weight: normal;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            cursor: pointer;
+        }
+
+        .btn-enviar {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            background-color: var(--dorado);
+            color: var(--azul-oscuro);
+            font-size: 1.2em;
+            font-weight: bold;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.2s;
+            margin-top: 20px;
+        }
+
+        .btn-enviar:hover {
+            background-color: #b08a4a;
+            transform: scale(1.01);
+        }
+
+        @media (max-width: 600px) {
+            form { padding: 20px; }
+            .fila { flex-direction: column; gap: 10px; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div style="background-color: white; display: inline-block; padding: 10px 20px; border-radius: 8px; margin-bottom: 15px;">
+    <img src="{{ url_for('static', filename='logo.png') }}" alt="Althea Textil BG" style="max-width: 150px; display: block;">
+</div>
+        <h1>FORMULARIO DE SOLICITUD DE CRÉDITO EMPRESARIAL</h1>
+        <p>Althea Textil BG - Vestuario Industrial y Dotaciones</p>
+    </header>
+
+    <div class="container">
+        <div class="aviso">
+            El diligenciamiento de este formulario no implica la aprobación automática del crédito. La aprobación, cupo y condiciones estarán sujetos al análisis y validación de la información suministrada.
+        </div>
+
+        <form action="/enviar" method="POST">
+            
+            <!-- SECCIÓN 1 -->
+            <div class="seccion">
+                <h2>1. Información General de la Empresa</h2>
+                <div class="fila">
+                    <div class="campo">
+                        <label>Razón Social *</label>
+                        <input type="text" name="razon_social" required>
+                    </div>
+                    <div class="campo">
+                        <label>NIT *</label>
+                        <input type="text" name="nit" required>
+                    </div>
+                </div>
+                <div class="fila">
+                    <div class="campo">
+                        <label>Nombre Comercial *</label>
+                        <input type="text" name="nombre_comercial" required>
+                    </div>
+                    <div class="campo">
+                        <label>Actividad Económica *</label>
+                        <input type="text" name="actividad_economica" required>
+                    </div>
+                </div>
+                <div class="fila">
+                    <div class="campo">
+                        <label>Dirección *</label>
+                        <input type="text" name="direccion" required>
+                    </div>
+                    <div class="campo">
+                        <label>Ciudad / Municipio *</label>
+                        <input type="text" name="ciudad" required>
+                    </div>
+                    <div class="campo">
+                        <label>Departamento *</label>
+                        <input type="text" name="departamento" required>
+                    </div>
+                </div>
+                <div class="fila">
+                    <div class="campo">
+                        <label>Teléfono *</label>
+                        <input type="tel" name="telefono" required>
+                    </div>
+                    <div class="campo">
+                        <label>Correo Electrónico *</label>
+                        <input type="email" name="correo" required>
+                    </div>
+                </div>
+                <div class="fila">
+                    <div class="campo">
+                        <label>Fecha de Constitución *</label>
+                        <input type="date" name="fecha_constitucion" required>
+                    </div>
+                    <div class="campo">
+                        <label>Número de Empleados *</label>
+                        <input type="number" name="num_empleados" required>
+                    </div>
+                    <div class="campo">
+                        <label>Tipo de Empresa *</label>
+                        <select name="tipo_empresa" required>
+                            <option value="">Seleccione...</option>
+                            <option value="Persona Natural">Persona Natural</option>
+                            <option value="S.A.S.">S.A.S.</option>
+                            <option value="S.A.">S.A.</option>
+                            <option value="Ltda">Ltda</option>
+                            <option value="Otro">Otro</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SECCIÓN 2 -->
+            <div class="seccion">
+                <h2>2. Información del Representante Legal</h2>
+                <div class="fila">
+                    <div class="campo">
+                        <label>Nombre Completo *</label>
+                        <input type="text" name="rep_nombre" required>
+                    </div>
+                    <div class="campo">
+                        <label>Tipo y Número de Documento *</label>
+                        <input type="text" name="rep_documento" required>
+                    </div>
+                </div>
+                <div class="fila">
+                    <div class="campo">
+                        <label>Cargo *</label>
+                        <input type="text" name="rep_cargo" required>
+                    </div>
+                    <div class="campo">
+                        <label>Teléfono / Celular *</label>
+                        <input type="tel" name="rep_telefono" required>
+                    </div>
+                </div>
+                <div class="fila">
+                    <div class="campo">
+                        <label>Correo Electrónico *</label>
+                        <input type="email" name="rep_correo" required>
+                    </div>
+                    <div class="campo">
+                        <label>Dirección de Residencia *</label>
+                        <input type="text" name="rep_direccion" required>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SECCIÓN 3 -->
+            <div class="seccion">
+                <h2>3. Información Tributaria y Comercial</h2>
+                <div class="fila">
+                    <div class="campo">
+                        <label>Régimen Tributario *</label>
+                        <input type="text" name="regimen_tributario" required>
+                    </div>
+                    <div class="campo">
+                        <label>Responsabilidades Tributarias *</label>
+                        <input type="text" name="responsabilidades" required>
+                    </div>
+                </div>
+                <div class="fila">
+                    <div class="campo">
+                        <label>¿Es responsable de IVA? *</label>
+                        <div class="radio-group">
+                            <label><input type="radio" name="responsable_iva" value="Sí" required> Sí</label>
+                            <label><input type="radio" name="responsable_iva" value="No"> No</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="fila">
+                    <div class="campo">
+                        <label>Cámara de Comercio *</label>
+                        <input type="text" name="camara_comercio" required>
+                    </div>
+                    <div class="campo">
+                        <label>Fecha de Matrícula Mercantil *</label>
+                        <input type="date" name="fecha_matricula" required>
+                    </div>
+                    <div class="campo">
+                        <label>Fecha de Última Renovación *</label>
+                        <input type="date" name="fecha_renovacion" required>
+                    </div>
+                </div>
+                <div class="fila">
+                    <div class="campo">
+                        <label>¿Maneja compras a crédito con otros proveedores? *</label>
+                        <div class="radio-group">
+                            <label><input type="radio" name="compras_credito" value="Sí" required> Sí</label>
+                            <label><input type="radio" name="compras_credito" value="No"> No</label>
+                        </div>
+                    </div>
+                    <div class="campo">
+                        <label>En caso afirmativo, indique el plazo habitual:</label>
+                        <select name="plazo_habitual">
+                            <option value="">Seleccione...</option>
+                            <option value="15 días">15 días</option>
+                            <option value="30 días">30 días</option>
+                            <option value="45 días">45 días</option>
+                            <option value="60 días">60 días</option>
+                            <option value="Otro">Otro</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SECCIÓN 4 -->
+            <div class="seccion">
+                <h2>4. Información Financiera</h2>
+                <div class="fila">
+                    <div class="campo">
+                        <label>Ventas mensuales aproximadas *</label>
+                        <input type="text" name="ventas_mensuales" required>
+                    </div>
+                    <div class="campo">
+                        <label>Activos aproximados *</label>
+                        <input type="text" name="activos" required>
+                    </div>
+                </div>
+                <div class="fila">
+                    <div class="campo">
+                        <label>Pasivos aproximados *</label>
+                        <input type="text" name="pasivos" required>
+                    </div>
+                    <div class="campo">
+                        <label>Patrimonio aproximado *</label>
+                        <input type="text" name="patrimonio" required>
+                    </div>
+                </div>
+                <div class="fila">
+                    <div class="campo">
+                        <label>Bancos con los que trabaja *</label>
+                        <input type="text" name="bancos" required>
+                    </div>
+                    <div class="campo">
+                        <label>Antigüedad de la relación bancaria *</label>
+                        <input type="text" name="antiguedad_bancaria" required>
+                    </div>
+                </div>
+                <div class="fila">
+                    <div class="campo">
+                        <label>¿Posee actualmente obligaciones financieras? *</label>
+                        <div class="radio-group">
+                            <label><input type="radio" name="obligaciones" value="Sí" required> Sí</label>
+                            <label><input type="radio" name="obligaciones" value="No"> No</label>
+                        </div>
+                    </div>
+                    <div class="campo">
+                        <label>¿Presenta obligaciones vencidas o en mora? *</label>
+                        <div class="radio-group">
+                            <label><input type="radio" name="mora" value="Sí" required> Sí</label>
+                            <label><input type="radio" name="mora" value="No"> No</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SECCIÓN 5 -->
+            <div class="seccion">
+                <h2>5. Solicitud de Crédito con Althea</h2>
+                <div class="fila">
+                    <div class="campo">
+                        <label>Cupo de crédito solicitado *</label>
+                        <input type="text" name="cupo_solicitado" required>
+                    </div>
+                    <div class="campo">
+                        <label>Plazo solicitado *</label>
+                        <select name="plazo_solicitado" required>
+                            <option value="">Seleccione...</option>
+                            <option value="15 días">15 días</option>
+                            <option value="30 días">30 días</option>
+                            <option value="45 días">45 días</option>
+                            <option value="60 días">60 días</option>
+                            <option value="Otro">Otro</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="fila">
+                    <div class="campo">
+                        <label>Tipo de productos que adquirirá *</label>
+                        <select name="tipo_productos" required>
+                            <option value="">Seleccione...</option>
+                            <option value="Dotación Empresarial">Dotación Empresarial</option>
+                            <option value="EPPS">EPPS</option>
+                            <option value="Servicio de Bordado">Servicio de Bordado</option>
+                            <option value="Servicio de Estampado">Servicio de Estampado</option>
+                            <option value="Calzado Industrial">Calzado Industrial</option>
+                        </select>
+                    </div>
+                    <div class="campo">
+                        <label>Frecuencia estimada de compra *</label>
+                        <select name="frecuencia_compra" required>
+                            <option value="">Seleccione...</option>
+                            <option value="Semanal">Semanal</option>
+                            <option value="Quincenal">Quincenal</option>
+                            <option value="Mensual">Mensual</option>
+                            <option value="Trimestral">Trimestral</option>
+                            <option value="Ocasional">Ocasional</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="fila">
+                    <div class="campo">
+                        <label>Valor aproximado de compras mensuales *</label>
+                        <input type="text" name="valor_compras" required>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SECCIÓN 6 -->
+            <div class="seccion">
+                <h2>6. Referencias Comerciales</h2>
+                <h3 style="font-size: 1em; color: var(--dorado); margin-bottom: 10px;">Referencia Comercial 1</h3>
+                <div class="fila">
+                    <div class="campo">
+                        <label>Nombre Empresa *</label>
+                        <input type="text" name="ref1_empresa" required>
+                    </div>
+                    <div class="campo">
+                        <label>Persona de Contacto *</label>
+                        <input type="text" name="ref1_contacto" required>
+                    </div>
+                </div>
+                <div class="fila">
+                    <div class="campo">
+                        <label>Cargo *</label>
+                        <input type="text" name="ref1_cargo" required>
+                    </div>
+                    <div class="campo">
+                        <label>Teléfono *</label>
+                        <input type="tel" name="ref1_telefono" required>
+                    </div>
+                </div>
+                <div class="fila">
+                    <div class="campo">
+                        <label>Correo Electrónico *</label>
+                        <input type="email" name="ref1_correo" required>
+                    </div>
+                    <div class="campo">
+                        <label>Tiempo de Relación Comercial *</label>
+                        <input type="text" name="ref1_tiempo" required>
+                    </div>
+                </div>
+
+                <h3 style="font-size: 1em; color: var(--dorado); margin: 20px 0 10px 0;">Referencia Comercial 2</h3>
+                <div class="fila">
+                    <div class="campo">
+                        <label>Nombre Empresa *</label>
+                        <input type="text" name="ref2_empresa" required>
+                    </div>
+                    <div class="campo">
+                        <label>Persona de Contacto *</label>
+                        <input type="text" name="ref2_contacto" required>
+                    </div>
+                </div>
+                <div class="fila">
+                    <div class="campo">
+                        <label>Cargo *</label>
+                        <input type="text" name="ref2_cargo" required>
+                    </div>
+                    <div class="campo">
+                        <label>Teléfono *</label>
+                        <input type="tel" name="ref2_telefono" required>
+                    </div>
+                </div>
+                <div class="fila">
+                    <div class="campo">
+                        <label>Correo Electrónico *</label>
+                        <input type="email" name="ref2_correo" required>
+                    </div>
+                    <div class="campo">
+                        <label>Tiempo de Relación Comercial *</label>
+                        <input type="text" name="ref2_tiempo" required>
+                    </div>
+                </div>
+            </div>
+
+            <button type="submit" class="btn-enviar">Enviar Solicitud</button>
+        </form>
+    </div>
+
+</body>
+</html>
