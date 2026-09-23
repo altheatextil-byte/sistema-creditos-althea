@@ -99,36 +99,31 @@ def login_required(f):
 def enviar_correo_cliente(solicitud, decision):
     try:
         if decision == "Aprobado":
-            asunto = f"✅ Crédito Aprobado - {solicitud.razon_social}"
+            asunto = f"Credito Aprobado - {solicitud.razon_social}"
             color = "#27ae60"
-            titulo = "¡Su solicitud ha sido APROBADA!"
-            mensaje = f"Nos complace informarle que su solicitud de crédito para la empresa <strong>{solicitud.razon_social}</strong> ha sido <strong>APROBADA</strong>.<br><br><strong>Cupo asignado:</strong> {solicitud.cupo_solicitado}<br><strong>Plazo:</strong> {solicitud.plazo_solicitado}<br><br>Pronto nos pondremos en contacto para coordinar los detalles de su primer pedido."
+            titulo = "Su solicitud ha sido APROBADA"
         else:
-            asunto = f"❌ Crédito Rechazado - {solicitud.razon_social}"
+            asunto = f"Credito Rechazado - {solicitud.razon_social}"
             color = "#e74c3c"
             titulo = "Solicitud No Aprobada"
-            mensaje = f"Le informamos que su solicitud de crédito para la empresa <strong>{solicitud.razon_social}</strong> no ha sido aprobada en esta ocasión.<br><br>Agradecemos su interés y quedamos atentos a futuras oportunidades."
 
         html = f"""
-        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: auto; border: 1px solid #ddd; border-radius: 8px; overflow: hidden;">
+        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: auto; border: 1px solid #ddd; border-radius: 8px;">
             <div style="background-color: #1a1a2e; padding: 20px; text-align: center;">
                 <h1 style="color: #c9a05b; margin: 0;">ALTHEA</h1>
-                <p style="color: white; margin: 5px 0 0 0;">Textil BG - Vestuario Industrial</p>
             </div>
-            <div style="padding: 30px; background-color: #f9f9f9;">
+            <div style="padding: 30px;">
                 <h2 style="color: {color};">{titulo}</h2>
                 <p>Estimado(a) <strong>{solicitud.rep_nombre}</strong>,</p>
-                <p>{mensaje}</p>
-                <br>
-                <p style="color: #666; font-size: 0.9em;">Atentamente, Althea Textil BG.</p>
-            </div>
-            <div style="background-color: #1a1a2e; padding: 15px; text-align: center; color: white; font-size: 0.8em;">
-                Althea Textil BG | Yondó, Antioquia | 3128779007
+                <p>Su solicitud para la empresa <strong>{solicitud.razon_social}</strong> ha sido {decision.lower()}.</p>
+                <p><strong>Cupo:</strong> {solicitud.cupo_solicitado}</p>
+                <p><strong>Plazo:</strong> {solicitud.plazo_solicitado}</p>
             </div>
         </div>
         """
         msg = Message(subject=asunto, recipients=[solicitud.rep_correo], html=html)
         mail.send(msg)
+        print(f"Correo enviado a {solicitud.rep_correo}")
     except Exception as e:
         print(f"Error al enviar correo al cliente: {e}")
 
@@ -194,6 +189,18 @@ def enviar_solicitud():
     )
     db.session.add(nueva)
     db.session.commit()
+
+    # Correo ligero al administrador
+    try:
+        msg = Message(
+            subject=f"Nueva Solicitud - {nueva.razon_social}",
+            recipients=['altheatextil@gmail.com']
+        )
+        msg.body = f"Nueva solicitud de {nueva.razon_social}. Cupo: {nueva.cupo_solicitado}. Revisa el panel."
+        mail.send(msg)
+        print("Correo al administrador enviado.")
+    except Exception as e:
+        print(f"Error al enviar correo al admin: {e}")
     
         
     return render_template('exito.html', nombre=nueva.razon_social)
