@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for, session, send_file
+from flask import Flask, render_template, request, redirect, url_for, session, send_file, flash
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import text
 from datetime import datetime, timedelta
@@ -193,8 +193,26 @@ def login_required(f):
 def mostrar_formulario():
     return render_template('formulario.html')
 
+
+@app.route('/politica-de-privacidad')
+def politica_privacidad():
+    return render_template('politica.html')
+
+
+@app.route('/solicitud-enviada')
+def solicitud_enviada():
+    return render_template('exito.html', nombre=request.args.get('nombre', ''))
+
+
 @app.route('/enviar', methods=['POST'])
 def enviar_solicitud():
+    if request.form.get('acepta_politica') != 'si':
+        return render_template(
+            'formulario.html',
+            error='Debes aceptar la Política de Tratamiento de Datos Personales para enviar la solicitud.',
+            datos=request.form,
+        ), 400
+
     nueva = Solicitud(
         razon_social=request.form['razon_social'],
         nit=request.form['nit'],
@@ -254,25 +272,26 @@ def enviar_solicitud():
     # Correo al administrador usando Resend
     html_admin = f"""
     <div style="font-family: Arial, sans-serif; max-width: 600px; margin: auto; border: 1px solid #ddd; border-radius: 8px;">
-        <div style="background-color: #1a1a2e; padding: 20px; text-align: center;">
-            <h1 style="color: #c9a05b; margin: 0;">ALTHEA</h1>
+        <div style="background-color: #02192B; padding: 20px; text-align: center;">
+            <h1 style="color: #AA8434; margin: 0;">ALTHEA</h1>
             <p style="color: white; margin: 5px 0 0 0;">Nueva Solicitud de Crédito</p>
         </div>
         <div style="padding: 30px;">
-            <h2 style="color: #1a1a2e;">Resumen</h2>
+            <h2 style="color: #02192B;">Resumen</h2>
             <p><strong>Empresa:</strong> {nueva.razon_social}</p>
             <p><strong>NIT:</strong> {nueva.nit}</p>
             <p><strong>Representante:</strong> {nueva.rep_nombre}</p>
             <p><strong>Cupo:</strong> {nueva.cupo_solicitado}</p>
             <p><strong>Plazo:</strong> {nueva.plazo_solicitado}</p>
             <br>
-            <a href="https://sistema-creditos-althea.onrender.com/panel" style="background-color: #c9a05b; color: #1a1a2e; padding: 12px 25px; text-decoration: none; border-radius: 5px; font-weight: bold;">Ver en el Panel</a>
+            <a href="https://sistema-creditos-althea.onrender.com/panel" style="background-color: #AA8434; color: #02192B; padding: 12px 25px; text-decoration: none; border-radius: 5px; font-weight: bold;">Ver en el Panel</a>
         </div>
     </div>
     """
     enviar_correo_resend('altheatextil@gmail.com', f'Nueva Solicitud - {nueva.razon_social}', html_admin)
-    
-    return render_template('exito.html', nombre=nueva.razon_social)
+
+    flash('¡Solicitud enviada con éxito! Pronto nos pondremos en contacto.', 'success')
+    return redirect(url_for('solicitud_enviada', nombre=nueva.razon_social))
 
 @app.route('/favicon.ico')
 def favicon():
@@ -370,8 +389,8 @@ def cambiar_estado(id, estado):
     
     html_cliente = f"""
     <div style="font-family: Arial, sans-serif; max-width: 600px; margin: auto; border: 1px solid #ddd; border-radius: 8px;">
-        <div style="background-color: #1a1a2e; padding: 20px; text-align: center;">
-            <h1 style="color: #c9a05b; margin: 0;">ALTHEA</h1>
+        <div style="background-color: #02192B; padding: 20px; text-align: center;">
+            <h1 style="color: #AA8434; margin: 0;">ALTHEA</h1>
         </div>
         <div style="padding: 30px;">
             <h2 style="color: {color};">{titulo}</h2>

@@ -3,522 +3,727 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Solicitud de Crédito - Althea</title>
+    <meta name="theme-color" content="#02192B">
+    <meta name="description" content="Solicitud de crédito empresarial de Althea Textil BG. Proceso seguro y confidencial.">
+    <title>Solicitud de Crédito Empresarial - Althea</title>
     <style>
         :root {
-            --azul-oscuro: #1a1a2e;
-            --dorado: #c9a05b;
-            --gris-fondo: #f4f4f4;
-            --blanco: #ffffff;
-            --texto: #333333;
+            --navy: #02192B;
+            --navy-700: #062B47;
+            --navy-500: #123B5C;
+            --gold: #AA8434;
+            --gold-600: #8F6E29;
+            --gold-100: #F5EEDD;
+            --ink: #12212E;
+            --muted: #5B6B7A;
+            --line: #E3E8EE;
+            --bg: #F2F5F8;
+            --danger: #912018;
+            --danger-bg: #FEF3F2;
+            --danger-line: #FECDCA;
+            --radius: 18px;
+            --shadow: 0 1px 2px rgba(2, 25, 43, .04), 0 14px 34px rgba(2, 25, 43, .07);
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
 
+        html { scroll-behavior: smooth; }
+
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--gris-fondo);
-            color: var(--texto);
-            line-height: 1.6;
-            padding-bottom: 50px;
+            font-family: "Segoe UI", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
+            background:
+                radial-gradient(1100px 520px at 8% -10%, rgba(170, 132, 52, .10), transparent 60%),
+                radial-gradient(900px 480px at 100% 0%, rgba(2, 25, 43, .07), transparent 55%),
+                var(--bg);
+            color: var(--ink);
+            line-height: 1.55;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
         }
 
-        header {
-            background-color: var(--azul-oscuro);
-            color: var(--blanco);
-            padding: 30px 20px;
-            text-align: center;
-            border-bottom: 5px solid var(--dorado);
+        a { color: var(--navy); }
+
+        /* ---------- Encabezado ---------- */
+        .site-header {
+            position: relative;
+            overflow: hidden;
+            padding: 26px 20px 54px;
+            color: #fff;
+            background: linear-gradient(135deg, #02192B 0%, #062B47 55%, #02192B 100%);
+        }
+        .site-header::before {
+            content: "";
+            position: absolute;
+            inset: -40% -10% auto auto;
+            width: 460px;
+            height: 460px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(170, 132, 52, .22), transparent 65%);
+            pointer-events: none;
+        }
+        .site-header::after {
+            content: "";
+            position: absolute;
+            left: 0; right: 0; bottom: 0;
+            height: 4px;
+            background: linear-gradient(90deg, transparent, var(--gold), transparent);
         }
 
-        header img {
-            max-width: 180px;
-            margin-bottom: 15px;
+        .header-inner {
+            position: relative;
+            z-index: 1;
+            max-width: 1080px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            flex-wrap: wrap;
         }
 
-        header h1 {
-            font-size: 1.8em;
-            letter-spacing: 1px;
+        .brand { display: flex; align-items: center; gap: 16px; }
+
+        .brand-logo {
+            background: #fff;
+            border-radius: 14px;
+            padding: 10px 14px;
+            box-shadow: 0 10px 24px rgba(0, 0, 0, .18);
+        }
+        .brand-logo img { display: block; max-width: 128px; height: auto; }
+
+        .brand-text .eyebrow {
+            font-size: .68rem;
+            font-weight: 700;
+            letter-spacing: .2em;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 4px;
+        }
+        .brand-text h1 {
+            font-size: clamp(1.25rem, 2.6vw, 1.85rem);
+            line-height: 1.2;
+            letter-spacing: -.01em;
+        }
+        .brand-text p {
+            margin-top: 6px;
+            font-size: .86rem;
+            color: #C9D6E2;
         }
 
-        header p {
-            color: var(--dorado);
-            font-size: 1em;
+        .header-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 9px 15px;
+            border: 1px solid rgba(255, 255, 255, .16);
+            background: rgba(255, 255, 255, .06);
+            border-radius: 999px;
+            font-size: .78rem;
+            color: #E8EEF4;
+            white-space: nowrap;
         }
+        .header-badge svg { flex: 0 0 auto; color: var(--gold); }
 
+        /* ---------- Layout ---------- */
         .container {
-            max-width: 900px;
-            margin: 30px auto;
-            padding: 0 20px;
+            max-width: 1080px;
+            margin: -28px auto 0;
+            padding: 0 20px 60px;
+            position: relative;
+            z-index: 2;
         }
 
         .aviso {
-            background-color: #fff3cd;
-            border-left: 5px solid var(--dorado);
-            padding: 15px;
-            margin-bottom: 30px;
-            border-radius: 5px;
-            font-size: 0.9em;
-            color: #856404;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            background: #fff;
+            border: 1px solid var(--line);
+            border-left: 4px solid var(--gold);
+            border-radius: 14px;
+            padding: 16px 18px;
+            margin-bottom: 22px;
+            box-shadow: 0 8px 22px rgba(2, 25, 43, .05);
+            font-size: .87rem;
+            color: #43525F;
+        }
+        .aviso svg { flex: 0 0 auto; margin-top: 2px; color: var(--gold-600); }
+        .aviso strong { color: var(--navy); }
+
+        /* ---------- Alertas ---------- */
+        .alert {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            border-radius: 13px;
+            padding: 14px 16px;
+            margin-bottom: 20px;
+            font-size: .9rem;
+            border: 1px solid transparent;
+        }
+        .alert svg { flex: 0 0 auto; margin-top: 1px; }
+        .alert-error {
+            color: var(--danger);
+            background: var(--danger-bg);
+            border-color: var(--danger-line);
+        }
+        .alert-error strong { display: block; margin-bottom: 2px; color: #7A1C15; }
+        .alert-success {
+            color: #05603A;
+            background: #ECFDF3;
+            border-color: #ABEFC6;
         }
 
-        form {
-            background-color: var(--blanco);
-            padding: 40px;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
-        }
+        /* ---------- Formulario y tarjetas ---------- */
+        .solicitud-form { display: flex; flex-direction: column; gap: 22px; }
 
         .seccion {
-            margin-bottom: 40px;
-            padding-bottom: 20px;
-            border-bottom: 2px solid #eee;
+            background: #fff;
+            border: 1px solid var(--line);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            padding: 28px 30px 30px;
         }
 
-        .seccion:last-of-type {
-            border-bottom: none;
-        }
-
-        .seccion h2 {
-            color: var(--azul-oscuro);
-            font-size: 1.3em;
-            margin-bottom: 20px;
-            padding-bottom: 10px;
-            border-bottom: 3px solid var(--dorado);
-            display: inline-block;
-        }
-
-        .fila {
+        .seccion-head {
             display: flex;
-            gap: 20px;
-            flex-wrap: wrap;
-            margin-bottom: 15px;
+            align-items: flex-start;
+            gap: 14px;
+            padding-bottom: 18px;
+            margin-bottom: 22px;
+            border-bottom: 1px solid var(--line);
         }
 
-        .campo {
-            flex: 1;
-            min-width: 250px;
-            display: flex;
-            flex-direction: column;
+        .step {
+            flex: 0 0 40px;
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            display: grid;
+            place-items: center;
+            font-size: .82rem;
+            font-weight: 800;
+            letter-spacing: .04em;
+            color: var(--navy);
+            background: linear-gradient(135deg, #C7A75F, var(--gold));
+            box-shadow: 0 6px 14px rgba(170, 132, 52, .28);
         }
 
-        .campo label {
-            font-weight: bold;
-            font-size: 0.9em;
-            margin-bottom: 5px;
-            color: var(--azul-oscuro);
+        .seccion-head h2 {
+            font-size: 1.08rem;
+            color: var(--navy);
+            letter-spacing: -.01em;
+            line-height: 1.3;
+        }
+        .seccion-head p {
+            margin-top: 4px;
+            font-size: .82rem;
+            color: var(--muted);
         }
 
-        .campo input, .campo select, .campo textarea {
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            font-size: 1em;
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(12, minmax(0, 1fr));
+            gap: 16px 18px;
+        }
+        .span-12 { grid-column: span 12; }
+        .span-8 { grid-column: span 8; }
+        .span-6 { grid-column: span 6; }
+        .span-4 { grid-column: span 4; }
+        .span-3 { grid-column: span 3; }
+
+        .campo { display: flex; flex-direction: column; gap: 7px; min-width: 0; }
+
+        .campo label,
+        .campo .label-text {
+            font-size: .79rem;
+            font-weight: 700;
+            color: var(--navy);
+            letter-spacing: .01em;
+            line-height: 1.35;
+        }
+
+        .req { color: var(--gold-600); margin-left: 2px; }
+
+        .campo input,
+        .campo select {
+            width: 100%;
+            height: 46px;
+            padding: 0 13px;
+            border: 1px solid #D7DEE7;
+            border-radius: 10px;
+            background: #FBFCFD;
+            color: var(--ink);
+            font-size: .93rem;
             font-family: inherit;
-            transition: border-color 0.3s;
+            transition: border-color .18s ease, box-shadow .18s ease, background .18s ease;
         }
+        .campo input::placeholder { color: #98A6B5; }
+        .campo input:hover,
+        .campo select:hover { border-color: #C3CDD8; }
 
-        .campo input:focus, .campo select:focus, .campo textarea:focus {
+        .campo input:focus,
+        .campo select:focus {
             outline: none;
-            border-color: var(--dorado);
-            box-shadow: 0 0 5px rgba(201, 160, 91, 0.3);
+            background: #fff;
+            border-color: var(--gold);
+            box-shadow: 0 0 0 4px rgba(170, 132, 52, .16);
         }
 
         .radio-group {
             display: flex;
-            gap: 20px;
+            gap: 10px;
             flex-wrap: wrap;
-            margin-top: 5px;
+            align-items: center;
+            min-height: 46px;
         }
 
-        .radio-group label {
-            font-weight: normal;
+        .radio-opcion {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 15px;
+            border: 1px solid #D7DEE7;
+            border-radius: 10px;
+            background: #FBFCFD;
+            font-size: .88rem;
+            font-weight: 600;
+            color: var(--ink);
+            cursor: pointer;
+            transition: border-color .18s ease, background .18s ease, box-shadow .18s ease;
+        }
+        .radio-opcion:hover { border-color: #C3CDD8; }
+        .radio-opcion input {
+            width: 16px;
+            height: 16px;
+            accent-color: var(--gold);
+            cursor: pointer;
+        }
+        .radio-opcion:has(input:checked) {
+            border-color: var(--gold);
+            background: var(--gold-100);
+            box-shadow: 0 0 0 3px rgba(170, 132, 52, .12);
+        }
+
+        /* ---------- Referencias ---------- */
+        .ref-block {
+            border: 1px dashed #DCE3EA;
+            border-radius: 14px;
+            background: #FCFDFE;
+            padding: 18px;
+        }
+        .ref-block + .ref-block { margin-top: 18px; }
+        .ref-block h3 {
             display: flex;
             align-items: center;
-            gap: 5px;
+            gap: 8px;
+            margin-bottom: 15px;
+            font-size: .78rem;
+            letter-spacing: .1em;
+            text-transform: uppercase;
+            color: var(--gold-600);
+        }
+        .ref-block h3::before {
+            content: "";
+            width: 18px;
+            height: 2px;
+            border-radius: 2px;
+            background: var(--gold);
+        }
+
+        /* ---------- Privacidad y envío ---------- */
+        .privacidad {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            margin-top: 4px;
+            padding: 18px 20px;
+            border: 1px solid #EADFC6;
+            border-radius: 14px;
+            background: linear-gradient(180deg, #FFFDF8, #FBF6EA);
+        }
+        .privacidad input {
+            flex: 0 0 auto;
+            width: 18px;
+            height: 18px;
+            margin-top: 2px;
+            accent-color: var(--gold);
             cursor: pointer;
         }
+        .privacidad label {
+            font-size: .89rem;
+            color: #3A4653;
+            line-height: 1.5;
+            cursor: pointer;
+        }
+        .privacidad a {
+            color: var(--navy);
+            font-weight: 700;
+            text-decoration: underline;
+            text-decoration-color: var(--gold);
+            text-underline-offset: 3px;
+        }
+        .privacidad a:hover { color: var(--gold-600); }
+
+        .acciones { margin-top: 2px; }
 
         .btn-enviar {
-            display: block;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
             width: 100%;
-            padding: 15px;
-            background-color: var(--dorado);
-            color: var(--azul-oscuro);
-            font-size: 1.2em;
-            font-weight: bold;
-            border: none;
-            border-radius: 5px;
+            min-height: 56px;
+            padding: 14px 22px;
+            border: 1px solid rgba(2, 25, 43, .08);
+            border-radius: 13px;
+            background: linear-gradient(135deg, #C2A055, var(--gold));
+            color: var(--navy);
+            font-size: 1.02rem;
+            font-weight: 800;
+            letter-spacing: .01em;
             cursor: pointer;
-            transition: background-color 0.3s, transform 0.2s;
-            margin-top: 20px;
+            box-shadow: 0 12px 26px rgba(170, 132, 52, .28);
+            transition: transform .18s ease, box-shadow .18s ease, filter .18s ease;
         }
-
         .btn-enviar:hover {
-            background-color: #b08a4a;
-            transform: scale(1.01);
+            transform: translateY(-1px);
+            filter: brightness(1.03);
+            box-shadow: 0 16px 32px rgba(170, 132, 52, .34);
+        }
+        .btn-enviar:active { transform: translateY(0); }
+        .btn-enviar:focus-visible,
+        .privacidad input:focus-visible,
+        .radio-opcion input:focus-visible {
+            outline: 3px solid rgba(170, 132, 52, .45);
+            outline-offset: 2px;
         }
 
-        @media (max-width: 600px) {
-            form { padding: 20px; }
-            .fila { flex-direction: column; gap: 10px; }
+        .nota-envio {
+            margin-top: 10px;
+            text-align: center;
+            font-size: .76rem;
+            color: var(--muted);
+        }
+
+        /* ---------- Pie ---------- */
+        .site-footer {
+            max-width: 1080px;
+            margin: 0 auto;
+            padding: 0 20px 42px;
+            text-align: center;
+            font-size: .8rem;
+            color: var(--muted);
+        }
+        .site-footer a {
+            color: var(--navy);
+            font-weight: 600;
+            text-decoration: none;
+            border-bottom: 1px solid rgba(170, 132, 52, .5);
+        }
+        .site-footer a:hover { color: var(--gold-600); }
+        .site-footer .sep { margin: 0 8px; color: #B7C2CC; }
+
+        /* ---------- Responsive ---------- */
+        @media (max-width: 900px) {
+            .span-4, .span-3 { grid-column: span 6; }
+            .span-8 { grid-column: span 12; }
+            .header-badge { display: none; }
+        }
+
+        @media (max-width: 640px) {
+            .site-header { padding: 22px 16px 44px; }
+            .brand { gap: 12px; }
+            .brand-logo { padding: 8px 10px; border-radius: 11px; }
+            .brand-logo img { max-width: 104px; }
+            .brand-text p { font-size: .8rem; }
+
+            .container { padding: 0 14px 48px; margin-top: -26px; }
+            .seccion { padding: 20px 18px 22px; border-radius: 16px; }
+            .seccion-head { gap: 11px; margin-bottom: 18px; padding-bottom: 15px; }
+            .step { flex-basis: 34px; width: 34px; height: 34px; border-radius: 10px; font-size: .74rem; }
+            .seccion-head h2 { font-size: 1rem; }
+
+            .grid { grid-template-columns: 1fr; gap: 14px; }
+            .span-12, .span-8, .span-6, .span-4, .span-3 { grid-column: auto; }
+
+            .campo input, .campo select { height: 48px; font-size: 16px; }
+            .radio-group { flex-direction: column; align-items: stretch; }
+            .radio-opcion { justify-content: flex-start; }
+
+            .privacidad { padding: 15px 16px; }
+            .btn-enviar { min-height: 54px; font-size: .98rem; }
+            .ref-block { padding: 15px; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            html { scroll-behavior: auto; }
+            *, *::before, *::after { transition: none !important; }
         }
     </style>
 </head>
 <body>
+    {% set datos = datos if datos is defined and datos else {} %}
 
-    <header>
-        <div style="background-color: white; display: inline-block; padding: 10px 20px; border-radius: 8px; margin-bottom: 15px;">
-    <img src="{{ url_for('static', filename='logo.png') }}" alt="Althea Textil BG" style="max-width: 150px; display: block;">
-</div>
-        <h1>FORMULARIO DE SOLICITUD DE CRÉDITO EMPRESARIAL</h1>
-        <p>Althea Textil BG - Vestuario Industrial y Dotaciones</p>
+    {% macro campo_texto(name, label, type='text', required=True, placeholder='', span=6, autocomplete='off', min=None, max=None) -%}
+    <div class="campo span-{{ span }}">
+        <label for="{{ name }}">{{ label }}{% if required %}<span class="req" aria-hidden="true">*</span>{% endif %}</label>
+        <input id="{{ name }}" name="{{ name }}" type="{{ type }}"
+               value="{{ datos.get(name, '') }}"
+               placeholder="{{ placeholder }}"
+               autocomplete="{{ autocomplete }}"
+               {% if required %}required aria-required="true"{% endif %}
+               {% if min is not none %}min="{{ min }}"{% endif %}
+               {% if max is not none %}max="{{ max }}"{% endif %}>
+    </div>
+    {%- endmacro %}
+
+    {% macro campo_select(name, label, opciones, required=True, span=6, placeholder='Seleccione...') -%}
+    <div class="campo span-{{ span }}">
+        <label for="{{ name }}">{{ label }}{% if required %}<span class="req" aria-hidden="true">*</span>{% endif %}</label>
+        <select id="{{ name }}" name="{{ name }}" {% if required %}required aria-required="true"{% endif %}>
+            <option value="">{{ placeholder }}</option>
+            {% for opcion in opciones %}
+            <option value="{{ opcion }}" {% if datos.get(name) == opcion %}selected{% endif %}>{{ opcion }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    {%- endmacro %}
+
+    {% macro campo_radio(name, label, opciones, required=True, span=6) -%}
+    <div class="campo span-{{ span }}">
+        <span class="label-text">{{ label }}{% if required %}<span class="req" aria-hidden="true">*</span>{% endif %}</span>
+        <div class="radio-group" role="radiogroup" aria-label="{{ label }}">
+            {% for opcion in opciones %}
+            <label class="radio-opcion" for="{{ name }}_{{ loop.index }}">
+                <input id="{{ name }}_{{ loop.index }}" type="radio" name="{{ name }}" value="{{ opcion }}"
+                       {% if datos.get(name) == opcion %}checked{% endif %}
+                       {% if required and loop.first %}required aria-required="true"{% endif %}>
+                <span>{{ opcion }}</span>
+            </label>
+            {% endfor %}
+        </div>
+    </div>
+    {%- endmacro %}
+
+    <header class="site-header">
+        <div class="header-inner">
+            <div class="brand">
+                <div class="brand-logo">
+                    <img src="{{ url_for('static', filename='logo.png') }}" alt="Althea Textil BG">
+                </div>
+                <div class="brand-text">
+                    <p class="eyebrow">Althea Textil BG</p>
+                    <h1>Solicitud de Crédito Empresarial</h1>
+                    <p>Vestuario industrial y dotaciones corporativas</p>
+                </div>
+            </div>
+            <div class="header-badge">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <rect x="3" y="11" width="18" height="11" rx="2"></rect>
+                    <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                </svg>
+                Formulario seguro y confidencial
+            </div>
+        </div>
     </header>
 
-    <div class="container">
+    <main class="container">
         <div class="aviso">
-            El diligenciamiento de este formulario no implica la aprobación automática del crédito. La aprobación, cupo y condiciones estarán sujetos al análisis y validación de la información suministrada.
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <circle cx="12" cy="12" r="10"></circle>
+                <path d="M12 16v-4"></path>
+                <path d="M12 8h.01"></path>
+            </svg>
+            <div>
+                <strong>Proceso sujeto a estudio.</strong>
+                El diligenciamiento de este formulario no implica la aprobación automática del crédito.
+                El cupo y las condiciones estarán sujetos al análisis y validación de la información suministrada.
+            </div>
         </div>
 
-        <form action="/enviar" method="POST">
-            
-            <!-- SECCIÓN 1 -->
-            <div class="seccion">
-                <h2>1. Información General de la Empresa</h2>
-                <div class="fila">
-                    <div class="campo">
-                        <label>Razón Social *</label>
-                        <input type="text" name="razon_social" required>
-                    </div>
-                    <div class="campo">
-                        <label>NIT *</label>
-                        <input type="text" name="nit" required>
-                    </div>
-                </div>
-                <div class="fila">
-                    <div class="campo">
-                        <label>Nombre Comercial *</label>
-                        <input type="text" name="nombre_comercial" required>
-                    </div>
-                    <div class="campo">
-                        <label>Actividad Económica *</label>
-                        <input type="text" name="actividad_economica" required>
-                    </div>
-                </div>
-                <div class="fila">
-                    <div class="campo">
-                        <label>Dirección *</label>
-                        <input type="text" name="direccion" required>
-                    </div>
-                    <div class="campo">
-                        <label>Ciudad / Municipio *</label>
-                        <input type="text" name="ciudad" required>
-                    </div>
-                    <div class="campo">
-                        <label>Departamento *</label>
-                        <input type="text" name="departamento" required>
+        {% if error %}
+        <div class="alert alert-error" role="alert">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <circle cx="12" cy="12" r="10"></circle>
+                <path d="M12 8v4"></path>
+                <path d="M12 16h.01"></path>
+            </svg>
+            <div>
+                <strong>No pudimos enviar tu solicitud.</strong>
+                {{ error }}
+            </div>
+        </div>
+        {% endif %}
+
+        {% with mensajes = get_flashed_messages(with_categories=true) %}
+            {% for categoria, mensaje in mensajes %}
+            <div class="alert {{ 'alert-success' if categoria == 'success' else 'alert-error' }}" role="status">
+                <div>{{ mensaje }}</div>
+            </div>
+            {% endfor %}
+        {% endwith %}
+
+        <form class="solicitud-form" action="{{ url_for('enviar_solicitud') }}" method="POST" id="formulario-solicitud">
+            <section class="seccion" aria-labelledby="seccion-empresa">
+                <div class="seccion-head">
+                    <div class="step" aria-hidden="true">01</div>
+                    <div>
+                        <h2 id="seccion-empresa">Datos de la empresa</h2>
+                        <p>Información general y de contacto de la persona jurídica solicitante.</p>
                     </div>
                 </div>
-                <div class="fila">
-                    <div class="campo">
-                        <label>Teléfono *</label>
-                        <input type="tel" name="telefono" required>
-                    </div>
-                    <div class="campo">
-                        <label>Correo Electrónico *</label>
-                        <input type="email" name="correo" required>
+                <div class="grid">
+                    {{ campo_texto('razon_social', 'Razón Social', placeholder='Ej. Althea Textil S.A.S.', autocomplete='organization', span=6) }}
+                    {{ campo_texto('nit', 'NIT', placeholder='Ej. 900.123.456-7', autocomplete='off', span=6) }}
+                    {{ campo_texto('nombre_comercial', 'Nombre Comercial', placeholder='Nombre con el que opera la empresa', span=6) }}
+                    {{ campo_texto('actividad_economica', 'Actividad Económica', placeholder='Ej. Confección de prendas de vestir', span=6) }}
+                    {{ campo_texto('direccion', 'Dirección', placeholder='Dirección principal', autocomplete='street-address', span=8) }}
+                    {{ campo_texto('ciudad', 'Ciudad / Municipio', placeholder='Ej. Bogotá D.C.', autocomplete='address-level2', span=4) }}
+                    {{ campo_texto('departamento', 'Departamento', placeholder='Ej. Cundinamarca', autocomplete='address-level1', span=4) }}
+                    {{ campo_texto('telefono', 'Teléfono', type='tel', placeholder='Ej. +57 601 123 4567', autocomplete='tel', span=4) }}
+                    {{ campo_texto('correo', 'Correo Electrónico', type='email', placeholder='contacto@empresa.com', autocomplete='email', span=4) }}
+                    {{ campo_texto('fecha_constitucion', 'Fecha de Constitución', type='date', span=4) }}
+                    {{ campo_texto('num_empleados', 'Número de Empleados', type='number', placeholder='Ej. 25', min=0, span=4) }}
+                    {{ campo_select('tipo_empresa', 'Tipo de Empresa', ['Persona Natural', 'S.A.S.', 'S.A.', 'Ltda', 'Otro'], span=4) }}
+                </div>
+            </section>
+
+            <section class="seccion" aria-labelledby="seccion-representante">
+                <div class="seccion-head">
+                    <div class="step" aria-hidden="true">02</div>
+                    <div>
+                        <h2 id="seccion-representante">Datos personales del representante legal</h2>
+                        <p>Persona facultada para suscribir y representar a la empresa.</p>
                     </div>
                 </div>
-                <div class="fila">
-                    <div class="campo">
-                        <label>Fecha de Constitución *</label>
-                        <input type="date" name="fecha_constitucion" required>
-                    </div>
-                    <div class="campo">
-                        <label>Número de Empleados *</label>
-                        <input type="number" name="num_empleados" required>
-                    </div>
-                    <div class="campo">
-                        <label>Tipo de Empresa *</label>
-                        <select name="tipo_empresa" required>
-                            <option value="">Seleccione...</option>
-                            <option value="Persona Natural">Persona Natural</option>
-                            <option value="S.A.S.">S.A.S.</option>
-                            <option value="S.A.">S.A.</option>
-                            <option value="Ltda">Ltda</option>
-                            <option value="Otro">Otro</option>
-                        </select>
+                <div class="grid">
+                    {{ campo_texto('rep_nombre', 'Nombre Completo', placeholder='Nombres y apellidos', autocomplete='name', span=6) }}
+                    {{ campo_texto('rep_documento', 'Tipo y Número de Documento', placeholder='Ej. CC 1.234.567.890', span=6) }}
+                    {{ campo_texto('rep_cargo', 'Cargo', placeholder='Ej. Representante Legal', autocomplete='organization-title', span=6) }}
+                    {{ campo_texto('rep_telefono', 'Teléfono / Celular', type='tel', placeholder='Ej. +57 310 123 4567', autocomplete='tel', span=6) }}
+                    {{ campo_texto('rep_correo', 'Correo Electrónico', type='email', placeholder='representante@empresa.com', autocomplete='email', span=6) }}
+                    {{ campo_texto('rep_direccion', 'Dirección de Residencia', placeholder='Dirección de residencia', autocomplete='street-address', span=6) }}
+                </div>
+            </section>
+
+            <section class="seccion" aria-labelledby="seccion-tributaria">
+                <div class="seccion-head">
+                    <div class="step" aria-hidden="true">03</div>
+                    <div>
+                        <h2 id="seccion-tributaria">Información tributaria y comercial</h2>
+                        <p>Datos de constitución, régimen tributario y hábitos de compra.</p>
                     </div>
                 </div>
+                <div class="grid">
+                    {{ campo_texto('regimen_tributario', 'Régimen Tributario', placeholder='Ej. Régimen Simple de Tributación', span=6) }}
+                    {{ campo_texto('responsabilidades', 'Responsabilidades Tributarias', placeholder='Ej. Impuesto de renta e industria y comercio', span=6) }}
+                    {{ campo_radio('responsable_iva', '¿Es responsable de IVA?', ['Sí', 'No'], span=4) }}
+                    {{ campo_texto('camara_comercio', 'Cámara de Comercio', placeholder='Cámara que expidió el registro', span=4) }}
+                    {{ campo_texto('fecha_matricula', 'Fecha de Matrícula Mercantil', type='date', span=4) }}
+                    {{ campo_texto('fecha_renovacion', 'Fecha de Última Renovación', type='date', span=4) }}
+                    {{ campo_radio('compras_credito', '¿Maneja compras a crédito con otros proveedores?', ['Sí', 'No'], span=4) }}
+                    {{ campo_select('plazo_habitual', 'Plazo habitual (si aplica)', ['15 días', '30 días', '45 días', '60 días', 'Otro'], required=False, span=4) }}
+                </div>
+            </section>
+
+            <section class="seccion" aria-labelledby="seccion-financiera">
+                <div class="seccion-head">
+                    <div class="step" aria-hidden="true">04</div>
+                    <div>
+                        <h2 id="seccion-financiera">Información financiera</h2>
+                        <p>Datos generales para el análisis de capacidad de pago y riesgo.</p>
+                    </div>
+                </div>
+                <div class="grid">
+                    {{ campo_texto('ventas_mensuales', 'Ventas Mensuales Aproximadas', placeholder='Ej. $ 120.000.000', span=6) }}
+                    {{ campo_texto('activos', 'Activos Aproximados', placeholder='Ej. $ 350.000.000', span=6) }}
+                    {{ campo_texto('pasivos', 'Pasivos Aproximados', placeholder='Ej. $ 150.000.000', span=6) }}
+                    {{ campo_texto('patrimonio', 'Patrimonio Aproximado', placeholder='Ej. $ 200.000.000', span=6) }}
+                    {{ campo_texto('bancos', 'Bancos con los que trabaja', placeholder='Entidades financieras', span=6) }}
+                    {{ campo_texto('antiguedad_bancaria', 'Antigüedad de la relación bancaria', placeholder='Ej. 5 años', span=6) }}
+                    {{ campo_radio('obligaciones', '¿Posee actualmente obligaciones financieras?', ['Sí', 'No'], span=6) }}
+                    {{ campo_radio('mora', '¿Presenta obligaciones vencidas o en mora?', ['Sí', 'No'], span=6) }}
+                </div>
+            </section>
+
+            <section class="seccion" aria-labelledby="seccion-credito">
+                <div class="seccion-head">
+                    <div class="step" aria-hidden="true">05</div>
+                    <div>
+                        <h2 id="seccion-credito">Datos del crédito solicitado</h2>
+                        <p>Cupo, plazo y destino de la compra que desea financiar.</p>
+                    </div>
+                </div>
+                <div class="grid">
+                    {{ campo_texto('cupo_solicitado', 'Cupo de Crédito Solicitado', placeholder='Ej. $ 50.000.000', span=6) }}
+                    {{ campo_select('plazo_solicitado', 'Plazo Solicitado', ['15 días', '30 días', '45 días', '60 días', 'Otro'], span=6) }}
+                    {{ campo_select('tipo_productos', 'Tipo de productos que adquirirá', ['Dotación Empresarial', 'EPPS', 'Servicio de Bordado', 'Servicio de Estampado', 'Calzado Industrial'], span=6) }}
+                    {{ campo_select('frecuencia_compra', 'Frecuencia estimada de compra', ['Semanal', 'Quincenal', 'Mensual', 'Trimestral', 'Ocasional'], span=6) }}
+                    {{ campo_texto('valor_compras', 'Valor aproximado de compras mensuales', placeholder='Ej. $ 30.000.000', span=6) }}
+                </div>
+            </section>
+
+            <section class="seccion" aria-labelledby="seccion-referencias">
+                <div class="seccion-head">
+                    <div class="step" aria-hidden="true">06</div>
+                    <div>
+                        <h2 id="seccion-referencias">Referencias comerciales</h2>
+                        <p>Dos empresas con las que mantenga relación comercial actualmente.</p>
+                    </div>
+                </div>
+
+                <div class="ref-block">
+                    <h3>Referencia comercial 1</h3>
+                    <div class="grid">
+                        {{ campo_texto('ref1_empresa', 'Nombre Empresa', placeholder='Empresa de referencia', span=6) }}
+                        {{ campo_texto('ref1_contacto', 'Persona de Contacto', placeholder='Nombres y apellidos', span=6) }}
+                        {{ campo_texto('ref1_cargo', 'Cargo', placeholder='Cargo de la persona de contacto', span=4) }}
+                        {{ campo_texto('ref1_telefono', 'Teléfono', type='tel', placeholder='Teléfono de contacto', span=4) }}
+                        {{ campo_texto('ref1_correo', 'Correo Electrónico', type='email', placeholder='contacto@empresa.com', span=4) }}
+                        {{ campo_texto('ref1_tiempo', 'Tiempo de Relación Comercial', placeholder='Ej. 3 años', span=6) }}
+                    </div>
+                </div>
+
+                <div class="ref-block">
+                    <h3>Referencia comercial 2</h3>
+                    <div class="grid">
+                        {{ campo_texto('ref2_empresa', 'Nombre Empresa', placeholder='Empresa de referencia', span=6) }}
+                        {{ campo_texto('ref2_contacto', 'Persona de Contacto', placeholder='Nombres y apellidos', span=6) }}
+                        {{ campo_texto('ref2_cargo', 'Cargo', placeholder='Cargo de la persona de contacto', span=4) }}
+                        {{ campo_texto('ref2_telefono', 'Teléfono', type='tel', placeholder='Teléfono de contacto', span=4) }}
+                        {{ campo_texto('ref2_correo', 'Correo Electrónico', type='email', placeholder='contacto@empresa.com', span=4) }}
+                        {{ campo_texto('ref2_tiempo', 'Tiempo de Relación Comercial', placeholder='Ej. 2 años', span=6) }}
+                    </div>
+                </div>
+            </section>
+
+            <div class="privacidad">
+                <input type="checkbox" id="acepta_politica" name="acepta_politica" value="si" required aria-required="true" aria-describedby="ayuda-privacidad">
+                <label for="acepta_politica">
+                    He leído y acepto la
+                    <a href="{{ url_for('politica_privacidad') }}" target="_blank" rel="noopener noreferrer">Política de Tratamiento de Datos Personales</a>.
+                    <span id="ayuda-privacidad" class="req" aria-hidden="true">*</span>
+                </label>
             </div>
 
-            <!-- SECCIÓN 2 -->
-            <div class="seccion">
-                <h2>2. Información del Representante Legal</h2>
-                <div class="fila">
-                    <div class="campo">
-                        <label>Nombre Completo *</label>
-                        <input type="text" name="rep_nombre" required>
-                    </div>
-                    <div class="campo">
-                        <label>Tipo y Número de Documento *</label>
-                        <input type="text" name="rep_documento" required>
-                    </div>
-                </div>
-                <div class="fila">
-                    <div class="campo">
-                        <label>Cargo *</label>
-                        <input type="text" name="rep_cargo" required>
-                    </div>
-                    <div class="campo">
-                        <label>Teléfono / Celular *</label>
-                        <input type="tel" name="rep_telefono" required>
-                    </div>
-                </div>
-                <div class="fila">
-                    <div class="campo">
-                        <label>Correo Electrónico *</label>
-                        <input type="email" name="rep_correo" required>
-                    </div>
-                    <div class="campo">
-                        <label>Dirección de Residencia *</label>
-                        <input type="text" name="rep_direccion" required>
-                    </div>
-                </div>
+            <div class="acciones">
+                <button type="submit" class="btn-enviar">
+                    Enviar Solicitud
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <path d="M5 12h14"></path>
+                        <path d="m12 5 7 7-7 7"></path>
+                    </svg>
+                </button>
+                <p class="nota-envio">Los campos marcados con <span class="req">*</span> son obligatorios.</p>
             </div>
-
-            <!-- SECCIÓN 3 -->
-            <div class="seccion">
-                <h2>3. Información Tributaria y Comercial</h2>
-                <div class="fila">
-                    <div class="campo">
-                        <label>Régimen Tributario *</label>
-                        <input type="text" name="regimen_tributario" required>
-                    </div>
-                    <div class="campo">
-                        <label>Responsabilidades Tributarias *</label>
-                        <input type="text" name="responsabilidades" required>
-                    </div>
-                </div>
-                <div class="fila">
-                    <div class="campo">
-                        <label>¿Es responsable de IVA? *</label>
-                        <div class="radio-group">
-                            <label><input type="radio" name="responsable_iva" value="Sí" required> Sí</label>
-                            <label><input type="radio" name="responsable_iva" value="No"> No</label>
-                        </div>
-                    </div>
-                </div>
-                <div class="fila">
-                    <div class="campo">
-                        <label>Cámara de Comercio *</label>
-                        <input type="text" name="camara_comercio" required>
-                    </div>
-                    <div class="campo">
-                        <label>Fecha de Matrícula Mercantil *</label>
-                        <input type="date" name="fecha_matricula" required>
-                    </div>
-                    <div class="campo">
-                        <label>Fecha de Última Renovación *</label>
-                        <input type="date" name="fecha_renovacion" required>
-                    </div>
-                </div>
-                <div class="fila">
-                    <div class="campo">
-                        <label>¿Maneja compras a crédito con otros proveedores? *</label>
-                        <div class="radio-group">
-                            <label><input type="radio" name="compras_credito" value="Sí" required> Sí</label>
-                            <label><input type="radio" name="compras_credito" value="No"> No</label>
-                        </div>
-                    </div>
-                    <div class="campo">
-                        <label>En caso afirmativo, indique el plazo habitual:</label>
-                        <select name="plazo_habitual">
-                            <option value="">Seleccione...</option>
-                            <option value="15 días">15 días</option>
-                            <option value="30 días">30 días</option>
-                            <option value="45 días">45 días</option>
-                            <option value="60 días">60 días</option>
-                            <option value="Otro">Otro</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-
-            <!-- SECCIÓN 4 -->
-            <div class="seccion">
-                <h2>4. Información Financiera</h2>
-                <div class="fila">
-                    <div class="campo">
-                        <label>Ventas mensuales aproximadas *</label>
-                        <input type="text" name="ventas_mensuales" required>
-                    </div>
-                    <div class="campo">
-                        <label>Activos aproximados *</label>
-                        <input type="text" name="activos" required>
-                    </div>
-                </div>
-                <div class="fila">
-                    <div class="campo">
-                        <label>Pasivos aproximados *</label>
-                        <input type="text" name="pasivos" required>
-                    </div>
-                    <div class="campo">
-                        <label>Patrimonio aproximado *</label>
-                        <input type="text" name="patrimonio" required>
-                    </div>
-                </div>
-                <div class="fila">
-                    <div class="campo">
-                        <label>Bancos con los que trabaja *</label>
-                        <input type="text" name="bancos" required>
-                    </div>
-                    <div class="campo">
-                        <label>Antigüedad de la relación bancaria *</label>
-                        <input type="text" name="antiguedad_bancaria" required>
-                    </div>
-                </div>
-                <div class="fila">
-                    <div class="campo">
-                        <label>¿Posee actualmente obligaciones financieras? *</label>
-                        <div class="radio-group">
-                            <label><input type="radio" name="obligaciones" value="Sí" required> Sí</label>
-                            <label><input type="radio" name="obligaciones" value="No"> No</label>
-                        </div>
-                    </div>
-                    <div class="campo">
-                        <label>¿Presenta obligaciones vencidas o en mora? *</label>
-                        <div class="radio-group">
-                            <label><input type="radio" name="mora" value="Sí" required> Sí</label>
-                            <label><input type="radio" name="mora" value="No"> No</label>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- SECCIÓN 5 -->
-            <div class="seccion">
-                <h2>5. Solicitud de Crédito con Althea</h2>
-                <div class="fila">
-                    <div class="campo">
-                        <label>Cupo de crédito solicitado *</label>
-                        <input type="text" name="cupo_solicitado" required>
-                    </div>
-                    <div class="campo">
-                        <label>Plazo solicitado *</label>
-                        <select name="plazo_solicitado" required>
-                            <option value="">Seleccione...</option>
-                            <option value="15 días">15 días</option>
-                            <option value="30 días">30 días</option>
-                            <option value="45 días">45 días</option>
-                            <option value="60 días">60 días</option>
-                            <option value="Otro">Otro</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="fila">
-                    <div class="campo">
-                        <label>Tipo de productos que adquirirá *</label>
-                        <select name="tipo_productos" required>
-                            <option value="">Seleccione...</option>
-                            <option value="Dotación Empresarial">Dotación Empresarial</option>
-                            <option value="EPPS">EPPS</option>
-                            <option value="Servicio de Bordado">Servicio de Bordado</option>
-                            <option value="Servicio de Estampado">Servicio de Estampado</option>
-                            <option value="Calzado Industrial">Calzado Industrial</option>
-                        </select>
-                    </div>
-                    <div class="campo">
-                        <label>Frecuencia estimada de compra *</label>
-                        <select name="frecuencia_compra" required>
-                            <option value="">Seleccione...</option>
-                            <option value="Semanal">Semanal</option>
-                            <option value="Quincenal">Quincenal</option>
-                            <option value="Mensual">Mensual</option>
-                            <option value="Trimestral">Trimestral</option>
-                            <option value="Ocasional">Ocasional</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="fila">
-                    <div class="campo">
-                        <label>Valor aproximado de compras mensuales *</label>
-                        <input type="text" name="valor_compras" required>
-                    </div>
-                </div>
-            </div>
-
-            <!-- SECCIÓN 6 -->
-            <div class="seccion">
-                <h2>6. Referencias Comerciales</h2>
-                <h3 style="font-size: 1em; color: var(--dorado); margin-bottom: 10px;">Referencia Comercial 1</h3>
-                <div class="fila">
-                    <div class="campo">
-                        <label>Nombre Empresa *</label>
-                        <input type="text" name="ref1_empresa" required>
-                    </div>
-                    <div class="campo">
-                        <label>Persona de Contacto *</label>
-                        <input type="text" name="ref1_contacto" required>
-                    </div>
-                </div>
-                <div class="fila">
-                    <div class="campo">
-                        <label>Cargo *</label>
-                        <input type="text" name="ref1_cargo" required>
-                    </div>
-                    <div class="campo">
-                        <label>Teléfono *</label>
-                        <input type="tel" name="ref1_telefono" required>
-                    </div>
-                </div>
-                <div class="fila">
-                    <div class="campo">
-                        <label>Correo Electrónico *</label>
-                        <input type="email" name="ref1_correo" required>
-                    </div>
-                    <div class="campo">
-                        <label>Tiempo de Relación Comercial *</label>
-                        <input type="text" name="ref1_tiempo" required>
-                    </div>
-                </div>
-
-                <h3 style="font-size: 1em; color: var(--dorado); margin: 20px 0 10px 0;">Referencia Comercial 2</h3>
-                <div class="fila">
-                    <div class="campo">
-                        <label>Nombre Empresa *</label>
-                        <input type="text" name="ref2_empresa" required>
-                    </div>
-                    <div class="campo">
-                        <label>Persona de Contacto *</label>
-                        <input type="text" name="ref2_contacto" required>
-                    </div>
-                </div>
-                <div class="fila">
-                    <div class="campo">
-                        <label>Cargo *</label>
-                        <input type="text" name="ref2_cargo" required>
-                    </div>
-                    <div class="campo">
-                        <label>Teléfono *</label>
-                        <input type="tel" name="ref2_telefono" required>
-                    </div>
-                </div>
-                <div class="fila">
-                    <div class="campo">
-                        <label>Correo Electrónico *</label>
-                        <input type="email" name="ref2_correo" required>
-                    </div>
-                    <div class="campo">
-                        <label>Tiempo de Relación Comercial *</label>
-                        <input type="text" name="ref2_tiempo" required>
-                    </div>
-                </div>
-            </div>
-
-            <button type="submit" class="btn-enviar">Enviar Solicitud</button>
         </form>
-    </div>
+    </main>
 
+    <footer class="site-footer">
+        <span>© 2026 Althea Textil BG. Todos los derechos reservados.</span>
+        <span class="sep">·</span>
+        <a href="{{ url_for('politica_privacidad') }}">Política de Tratamiento de Datos</a>
+    </footer>
 </body>
 </html>

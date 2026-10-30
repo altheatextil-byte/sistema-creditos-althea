@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#02192B">
+    <meta name="description" content="Política de Tratamiento de Datos Personales de Althea Textil BG.">
+    <title>Política de Tratamiento de Datos - Althea</title>
+    <style>
+        :root {
+            --navy: #02192B;
+            --navy-700: #062B47;
+            --gold: #AA8434;
+            --gold-600: #8F6E29;
+            --gold-100: #F5EEDD;
+            --ink: #12212E;
+            --muted: #5B6B7A;
+            --line: #E3E8EE;
+            --bg: #F2F5F8;
+            --radius: 18px;
+            --shadow: 0 1px 2px rgba(2, 25, 43, .04), 0 14px 34px rgba(2, 25, 43, .07);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: "Segoe UI", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
+            background:
+                radial-gradient(1100px 520px at 8% -10%, rgba(170, 132, 52, .09), transparent 60%),
+                radial-gradient(900px 480px at 100% 0%, rgba(2, 25, 43, .06), transparent 55%),
+                var(--bg);
+            color: var(--ink);
+            line-height: 1.65;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+        }
+
+        a { color: var(--navy); }
+
+        /* ---------- Encabezado ---------- */
+        .site-header {
+            position: relative;
+            overflow: hidden;
+            padding: 24px 20px 58px;
+            color: #fff;
+            background: linear-gradient(135deg, #02192B 0%, #062B47 55%, #02192B 100%);
+        }
+        .site-header::before {
+            content: "";
+            position: absolute;
+            inset: -40% -10% auto auto;
+            width: 460px;
+            height: 460px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(170, 132, 52, .20), transparent 65%);
+            pointer-events: none;
+        }
+        .site-header::after {
+            content: "";
+            position: absolute;
+            left: 0; right: 0; bottom: 0;
+            height: 4px;
+            background: linear-gradient(90deg, transparent, var(--gold), transparent);
+        }
+
+        .header-inner {
+            position: relative;
+            z-index: 1;
+            max-width: 1080px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 18px;
+            flex-wrap: wrap;
+        }
+
+        .brand { display: flex; align-items: center; gap: 14px; }
+        .brand-logo {
+            background: #fff;
+            border-radius: 13px;
+            padding: 9px 13px;
+            box-shadow: 0 10px 24px rgba(0, 0, 0, .18);
+        }
+        .brand-logo img { display: block; max-width: 118px; height: auto; }
+        .brand-text .eyebrow {
+            font-size: .66rem;
+            font-weight: 700;
+            letter-spacing: .2em;
+            text-transform: uppercase;
+            color: var(--gold);
+        }
+        .brand-text h1 { font-size: clamp(1.05rem, 2.2vw, 1.45rem); line-height: 1.25; }
+        .brand-text p { font-size: .8rem; color: #C9D6E2; margin-top: 2px; }
+
+        .btn-volver {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 16px;
+            border: 1px solid rgba(255, 255, 255, .18);
+            border-radius: 999px;
+            background: rgba(255, 255, 255, .06);
+            color: #fff;
+            font-size: .82rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: background .18s ease, border-color .18s ease;
+        }
+        .btn-volver:hover { background: rgba(255, 255, 255, .12); border-color: rgba(255, 255, 255, .3); }
+
+        /* ---------- Hero ---------- */
+        .container {
+            max-width: 1080px;
+            margin: -30px auto 0;
+            padding: 0 20px 60px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero {
+            background: #fff;
+            border: 1px solid var(--line);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            padding: 30px 34px;
+            border-top: 5px solid var(--gold);
+            margin-bottom: 26px;
+        }
+        .hero .tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            padding: 5px 11px;
+            border-radius: 999px;
+            background: var(--gold-100);
+            color: var(--gold-600);
+            font-size: .7rem;
+            font-weight: 800;
+            letter-spacing: .08em;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+        }
+        .hero h2 {
+            color: var(--navy);
+            font-size: clamp(1.45rem, 3.2vw, 2.1rem);
+            line-height: 1.2;
+            letter-spacing: -.015em;
+        }
+        .hero .meta {
+            margin-top: 10px;
+            font-size: .84rem;
+            color: var(--muted);
+        }
+        .hero .meta strong { color: var(--navy); }
+        .hero p { margin-top: 14px; color: #43525F; font-size: .94rem; max-width: 78ch; }
+
+        /* ---------- Layout documento ---------- */
+        .documento {
+            display: grid;
+            grid-template-columns: 250px minmax(0, 1fr);
+            gap: 26px;
+            align-items: start;
+        }
+
+        .indice {
+            position: sticky;
+            top: 22px;
+            min-width: 0;
+            background: #fff;
+            border: 1px solid var(--line);
+            border-radius: 16px;
+            box-shadow: 0 8px 22px rgba(2, 25, 43, .05);
+            padding: 20px;
+        }
+        .indice h3 {
+            font-size: .72rem;
+            letter-spacing: .12em;
+            text-transform: uppercase;
+            color: var(--gold-600);
+            margin-bottom: 12px;
+        }
+        .indice ol { list-style: none; display: flex; flex-direction: column; gap: 2px; }
+        .indice a {
+            display: block;
+            padding: 6px 8px;
+            border-radius: 7px;
+            font-size: .82rem;
+            color: #465563;
+            text-decoration: none;
+            line-height: 1.35;
+            transition: background .16s ease, color .16s ease;
+        }
+        .indice a:hover { background: var(--gold-100); color: var(--navy); }
+
+        .articulo {
+            min-width: 0;
+            background: #fff;
+            border: 1px solid var(--line);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            padding: 34px 38px 38px;
+        }
+
+        .articulo section { padding-bottom: 26px; margin-bottom: 26px; border-bottom: 1px solid var(--line); }
+        .articulo section:last-of-type { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+
+        .articulo h2 {
+            display: flex;
+            align-items: baseline;
+            gap: 10px;
+            color: var(--navy);
+            font-size: 1.12rem;
+            line-height: 1.3;
+            letter-spacing: -.01em;
+            margin-bottom: 12px;
+            scroll-margin-top: 20px;
+        }
+        .articulo h2 .num {
+            color: var(--gold);
+            font-size: .86rem;
+            font-weight: 800;
+            letter-spacing: .06em;
+        }
+        .articulo h3 {
+            color: var(--navy);
+            font-size: .92rem;
+            margin: 16px 0 6px;
+        }
+        .articulo p { color: #3D4C59; font-size: .92rem; margin-bottom: 10px; }
+        .articulo p:last-child { margin-bottom: 0; }
+        .articulo ul, .articulo ol { margin: 8px 0 12px 20px; color: #3D4C59; font-size: .92rem; }
+        .articulo li { margin-bottom: 6px; padding-left: 2px; }
+        .articulo strong { color: var(--navy); }
+        .articulo a { color: var(--navy); font-weight: 600; text-decoration-color: var(--gold); text-underline-offset: 3px; }
+
+        .destacado {
+            background: linear-gradient(180deg, #FFFDF8, #FBF6EA);
+            border: 1px solid #EADFC6;
+            border-left: 4px solid var(--gold);
+            border-radius: 12px;
+            padding: 15px 17px;
+            margin: 14px 0;
+            font-size: .88rem;
+            color: #3A4653;
+        }
+        .destacado strong { color: var(--navy); }
+
+        .tabla-derechos {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 12px 0 4px;
+            font-size: .86rem;
+        }
+        .tabla-derechos th,
+        .tabla-derechos td {
+            text-align: left;
+            padding: 10px 12px;
+            border-bottom: 1px solid var(--line);
+            vertical-align: top;
+        }
+        .tabla-derechos th {
+            background: #F7F9FB;
+            color: var(--navy);
+            font-size: .76rem;
+            letter-spacing: .05em;
+            text-transform: uppercase;
+        }
+        .tabla-derechos td { color: #3D4C59; }
+        .tabla-derechos tr:last-child td { border-bottom: none; }
+
+        .contacto-box {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            background: var(--navy);
+            color: #E8EEF4;
+            border-radius: 14px;
+            padding: 18px 20px;
+            margin-top: 14px;
+        }
+        .contacto-box svg { flex: 0 0 auto; color: var(--gold); margin-top: 3px; }
+        .contacto-box strong { color: #fff; display: block; margin-bottom: 3px; }
+        .contacto-box a { color: #F0D9A8; text-decoration: none; }
+        .contacto-box a:hover { text-decoration: underline; }
+
+        /* ---------- Pie ---------- */
+        .site-footer {
+            max-width: 1080px;
+            margin: 0 auto;
+            padding: 0 20px 42px;
+            text-align: center;
+            font-size: .8rem;
+            color: var(--muted);
+        }
+        .site-footer a {
+            color: var(--navy);
+            font-weight: 600;
+            text-decoration: none;
+            border-bottom: 1px solid rgba(170, 132, 52, .5);
+        }
+        .site-footer a:hover { color: var(--gold-600); }
+        .site-footer .sep { margin: 0 8px; color: #B7C2CC; }
+
+        /* ---------- Responsive ---------- */
+        @media (max-width: 900px) {
+            .documento { grid-template-columns: minmax(0, 1fr); }
+            .indice { position: static; }
+            .indice ol {
+                display: grid;
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                gap: 2px 10px;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .site-header { padding: 20px 16px 48px; }
+            .brand-logo img { max-width: 100px; }
+            .btn-volver { padding: 8px 13px; font-size: .76rem; }
+            .container { padding: 0 14px 48px; margin-top: -26px; }
+            .hero { padding: 22px 20px; border-radius: 16px; }
+            .articulo { padding: 24px 20px 28px; border-radius: 16px; }
+            .indice { padding: 16px; border-radius: 14px; }
+            .indice ol { grid-template-columns: 1fr; }
+            .articulo h2 { font-size: 1.02rem; }
+            .tabla-derechos { font-size: .82rem; }
+            .tabla-derechos th, .tabla-derechos td { padding: 9px 8px; }
+            .contacto-box { padding: 15px 16px; }
+        }
+
+        @media print {
+            body { background: #fff; }
+            .site-header, .indice, .site-footer, .btn-volver { display: none !important; }
+            .container { margin: 0; padding: 0; max-width: none; }
+            .hero, .articulo { box-shadow: none; border: none; padding: 0; }
+            .hero { margin-bottom: 18px; }
+            .articulo section { break-inside: avoid; }
+        }
+    </style>
+</head>
+<body>
+    <header class="site-header">
+        <div class="header-inner">
+            <div class="brand">
+                <div class="brand-logo">
+                    <img src="{{ url_for('static', filename='logo.png') }}" alt="Althea Textil BG">
+                </div>
+                <div class="brand-text">
+                    <p class="eyebrow">Althea Textil BG</p>
+                    <h1>Política de Tratamiento de Datos Personales</h1>
+                    <p>Protección de la información · Ley 1581 de 2012</p>
+                </div>
+            </div>
+            <a class="btn-volver" href="{{ url_for('mostrar_formulario') }}">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="m12 19-7-7 7-7"></path>
+                    <path d="M19 12H5"></path>
+                </svg>
+                Volver al formulario
+            </a>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="hero">
+            <span class="tag">Documento legal</span>
+            <h2>Política de Tratamiento de Datos Personales</h2>
+            <p class="meta"><strong>Responsable:</strong> Althea Textil BG &nbsp;·&nbsp; <strong>Última actualización:</strong> 30 de octubre de 2026</p>
+            <p>
+                En cumplimiento de la Ley 1581 de 2012, el Decreto 1377 de 2013 y demás normas que regulan
+                la protección de datos personales en Colombia, Althea Textil BG informa a los titulares de los
+                datos personales las condiciones bajo las cuales realiza su recolección, almacenamiento, uso,
+                circulación y supresión.
+            </p>
+        </div>
+
+        <div class="documento">
+            <aside class="indice" aria-label="Contenido de la política">
+                <h3>Contenido</h3>
+                <ol>
+                    <li><a href="#responsable">1. Responsable del tratamiento</a></li>
+                    <li><a href="#marco">2. Marco legal</a></li>
+                    <li><a href="#datos">3. Datos que recolectamos</a></li>
+                    <li><a href="#finalidades">4. Finalidades</a></li>
+                    <li><a href="#autorizacion">5. Autorización</a></li>
+                    <li><a href="#derechos">6. Derechos del titular</a></li>
+                    <li><a href="#procedimiento">7. Cómo ejercer sus derechos</a></li>
+                    <li><a href="#transferencia">8. Transferencia de datos</a></li>
+                    <li><a href="#seguridad">9. Medidas de seguridad</a></li>
+                    <li><a href="#vigencia">10. Vigencia y cambios</a></li>
+                    <li><a href="#contacto">11. Contacto</a></li>
+                </ol>
+            </aside>
+
+            <article class="articulo">
+                <section>
+                    <h2 id="responsable"><span class="num">01</span> Responsable del tratamiento</h2>
+                    <p>
+                        El responsable del tratamiento de los datos personales recolectados a través de este
+                        sitio web es <strong>Althea Textil BG</strong>, sociedad domiciliada en la República de
+                        Colombia, dedicada a la comercialización de vestuario industrial, dotaciones corporativas
+                        y servicios relacionados.
+                    </p>
+                    <p>
+                        Para cualquier asunto relacionado con la protección de datos personales, el titular puede
+                        contactar al área responsable a través del correo electrónico
+                        <a href="mailto:altheatextil@gmail.com">altheatextil@gmail.com</a>.
+                    </p>
+                </section>
+
+                <section>
+                    <h2 id="marco"><span class="num">02</span> Marco legal aplicable</h2>
+                    <p>Esta política se rige, entre otras, por las siguientes normas colombianas:</p>
+                    <ul>
+                        <li><strong>Ley 1581 de 2012</strong>, por la cual se dictan disposiciones generales para la protección de datos personales.</li>
+                        <li><strong>Decreto 1377 de 2013</strong>, compilado en el Decreto 1074 de 2015, que reglamenta el tratamiento de datos personales.</li>
+                        <li><strong>Ley 1266 de 2008</strong>, en lo relativo a la información financiera, crediticia, comercial y de servicios.</li>
+                        <li>Circulares y guías de la Superintendencia de Industria y Comercio (SIC) en materia de protección de datos personales.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2 id="datos"><span class="num">03</span> Datos personales que recolectamos</h2>
+                    <p>
+                        A través del formulario de solicitud de crédito empresarial podemos recolectar las
+                        siguientes categorías de información:
+                    </p>
+                    <ul>
+                        <li><strong>Datos de identificación y contacto:</strong> nombre, documento de identidad, cargo, dirección, teléfono y correo electrónico del representante legal.</li>
+                        <li><strong>Datos de la empresa:</strong> razón social, NIT, nombre comercial, actividad económica, domicilio, fecha de constitución y número de empleados.</li>
+                        <li><strong>Información tributaria y comercial:</strong> régimen tributario, responsabilidades, registro mercantil y hábitos de compra.</li>
+                        <li><strong>Información financiera:</strong> ventas, activos, pasivos, patrimonio, entidades bancarias y obligaciones financieras.</li>
+                        <li><strong>Referencias comerciales:</strong> nombre, cargo, teléfono, correo y tiempo de relación de las personas de contacto.</li>
+                    </ul>
+                    <div class="destacado">
+                        <strong>Datos sensibles:</strong> este formulario no solicita datos sensibles, datos de menores
+                        de edad ni información sujeta a especial protección constitucional.
+                    </div>
+                </section>
+
+                <section>
+                    <h2 id="finalidades"><span class="num">04</span> Finalidades del tratamiento</h2>
+                    <p>Los datos personales serán utilizados exclusivamente para las siguientes finalidades:</p>
+                    <ol>
+                        <li>Evaluar, analizar y decidir sobre la solicitud de crédito empresarial presentada.</li>
+                        <li>Verificar la información suministrada y realizar estudios de riesgo crediticio.</li>
+                        <li>Contactar al solicitante o a sus referencias para validar datos y dar trámite a la solicitud.</li>
+                        <li>Gestionar la relación comercial, la facturación y el recaudo cuando la solicitud sea aprobada.</li>
+                        <li>Cumplir obligaciones legales, contables, tributarias y regulatorias aplicables.</li>
+                        <li>Atender consultas, reclamos y solicitudes relacionadas con el crédito o con los datos personales.</li>
+                    </ol>
+                    <p>
+                        Althea Textil BG no utilizará los datos para finalidades distintas a las aquí informadas
+                        sin obtener una nueva autorización del titular.
+                    </p>
+                </section>
+
+                <section>
+                    <h2 id="autorizacion"><span class="num">05</span> Autorización del titular</h2>
+                    <p>
+                        Al marcar la casilla de aceptación del formulario, el titular otorga su autorización
+                        previa, expresa e informada para el tratamiento de sus datos personales conforme a esta
+                        política. La autorización cubre la recolección, almacenamiento, uso, circulación y
+                        supresión de la información para las finalidades descritas.
+                    </p>
+                    <p>
+                        El titular podrá revocar la autorización en cualquier momento, siempre que no exista un
+                        deber legal o contractual que impida la supresión de los datos.
+                    </p>
+                </section>
+
+                <section>
+                    <h2 id="derechos"><span class="num">06</span> Derechos del titular</h2>
+                    <p>De conformidad con el artículo 8 de la Ley 1581 de 2012, el titular tiene derecho a:</p>
+                    <table class="tabla-derechos">
+                        <thead>
+                            <tr>
+                                <th>Derecho</th>
+                                <th>Contenido</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Conocer</td>
+                                <td>Acceder gratuitamente a los datos personales que reposan en nuestras bases de datos.</td>
+                            </tr>
+                            <tr>
+                                <td>Actualizar y rectificar</td>
+                                <td>Solicitar la corrección de información parcial, inexacta, incompleta o desactualizada.</td>
+                            </tr>
+                            <tr>
+                                <td>Suprimir</td>
+                                <td>Pedir la eliminación de los datos cuando no exista un deber legal o contractual de conservarlos.</td>
+                            </tr>
+                            <tr>
+                                <td>Revocar</td>
+                                <td>Revocar la autorización otorgada para el tratamiento de sus datos.</td>
+                            </tr>
+                            <tr>
+                                <td>Presentar quejas</td>
+                                <td>Acudir ante la Superintendencia de Industria y Comercio por presuntas infracciones.</td>
+                            </tr>
+                            <tr>
+                                <td>Abstenerse</td>
+                                <td>Negarse a suministrar datos que no sean necesarios para la finalidad solicitada.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </section>
+
+                <section>
+                    <h2 id="procedimiento"><span class="num">07</span> Cómo ejercer sus derechos</h2>
+                    <p>
+                        El titular o su representante legal puede presentar consultas, reclamos o solicitudes de
+                        actualización, rectificación o supresión escribiendo a
+                        <a href="mailto:altheatextil@gmail.com">altheatextil@gmail.com</a>, indicando su nombre,
+                        documento de identidad, descripción clara de la solicitud y datos de contacto.
+                    </p>
+                    <ul>
+                        <li><strong>Consultas:</strong> se atenderán en un plazo máximo de diez (10) días hábiles, prorrogables por cinco (5) días hábiles más cuando sea necesario.</li>
+                        <li><strong>Reclamos:</strong> se atenderán en un plazo máximo de quince (15) días hábiles, prorrogables por ocho (8) días hábiles más.</li>
+                        <li>Si la solicitud resulta incompleta, se requerirá al titular para que la complete dentro de los cinco (5) días siguientes.</li>
+                    </ul>
+                    <p>
+                        Si el titular no está conforme con la respuesta, podrá presentar queja ante la
+                        Superintendencia de Industria y Comercio.
+                    </p>
+                </section>
+
+                <section>
+                    <h2 id="transferencia"><span class="num">08</span> Transferencia y transmisión de datos</h2>
+                    <p>
+                        Althea Textil BG no vende, alquila ni comercializa datos personales. La información podrá
+                        ser transmitida únicamente a:
+                    </p>
+                    <ul>
+                        <li>Proveedores tecnológicos que actúan como encargados del tratamiento y prestan servicios de alojamiento, correo o gestión documental, bajo deberes de confidencialidad.</li>
+                        <li>Entidades financieras, centrales de riesgo o terceros autorizados, cuando sea necesario para evaluar la solicitud y el titular haya otorgado su autorización.</li>
+                        <li>Autoridades administrativas o judiciales cuando exista una obligación legal de hacerlo.</li>
+                    </ul>
+                    <p>
+                        Toda transmisión se realizará con las garantías y limitaciones previstas en la ley y en
+                        esta política.
+                    </p>
+                </section>
+
+                <section>
+                    <h2 id="seguridad"><span class="num">09</span> Medidas de seguridad</h2>
+                    <p>
+                        Implementamos medidas técnicas, administrativas y humanas razonables para proteger la
+                        información contra acceso no autorizado, pérdida, alteración, divulgación o uso indebido.
+                        Entre ellas se incluyen el acceso restringido a la información, el uso de conexiones
+                        cifradas, la gestión segura de credenciales y la capacitación del personal autorizado.
+                    </p>
+                    <p>
+                        Aunque aplicamos estándares razonables de seguridad, ningún sistema es completamente
+                        infalible; informaremos a los titulares y a la autoridad competente cuando se presente un
+                        incidente que afecte de manera significativa sus datos, conforme a la normativa aplicable.
+                    </p>
+                </section>
+
+                <section>
+                    <h2 id="vigencia"><span class="num">10</span> Vigencia y modificaciones</h2>
+                    <p>
+                        Esta política rige a partir de su publicación y permanecerá vigente mientras Althea Textil BG
+                        realice tratamiento de datos personales. Podrá ser modificada por cambios normativos,
+                        operativos o tecnológicos.
+                    </p>
+                    <p>
+                        Las modificaciones sustanciales serán publicadas en este sitio con su fecha de
+                        actualización. Cuando el cambio afecte la finalidad del tratamiento, se solicitará una
+                        nueva autorización al titular.
+                    </p>
+                </section>
+
+                <section>
+                    <h2 id="contacto"><span class="num">11</span> Contacto</h2>
+                    <p>
+                        Para consultas, reclamos o ejercicio de derechos en materia de protección de datos
+                        personales, escríbenos:
+                    </p>
+                    <div class="contacto-box">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <rect x="2" y="4" width="20" height="16" rx="2"></rect>
+                            <path d="m22 7-10 5L2 7"></path>
+                        </svg>
+                        <div>
+                            <strong>Althea Textil BG — Protección de Datos</strong>
+                            Correo: <a href="mailto:altheatextil@gmail.com">altheatextil@gmail.com</a><br>
+                            Domicilio: Colombia
+                        </div>
+                    </div>
+                </section>
+            </article>
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <span>© 2026 Althea Textil BG. Todos los derechos reservados.</span>
+        <span class="sep">·</span>
+        <a href="{{ url_for('mostrar_formulario') }}">Volver al formulario de solicitud</a>
+    </footer>
+</body>
+</html>
