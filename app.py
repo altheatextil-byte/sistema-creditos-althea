@@ -1,22 +1,76 @@
 from flask import Flask, render_template, request, redirect, url_for, session, send_file
 from flask_sqlalchemy import SQLAlchemy
-from datetime import datetime
+from sqlalchemy import text
+from datetime import datetime, timedelta
 from functools import wraps
+from werkzeug.middleware.proxy_fix import ProxyFix
 import os
 import io
+import secrets
 import openpyxl
 import requests
 
 app = Flask(__name__)
-app.secret_key = os.environ.get('SECRET_KEY', 'althea_secreto_super_seguro')
+
+# Render define RENDER=true en sus servicios.
+IS_PRODUCTION = os.environ.get('RENDER') == 'true' or os.environ.get('FLASK_ENV') == 'production'
+
+# --- SECRET KEY ---
+SECRET_KEY = os.environ.get('SECRET_KEY')
+if not SECRET_KEY:
+    if IS_PRODUCTION:
+        raise RuntimeError(
+            "SECRET_KEY no está configurada. Defínela en el dashboard de Render "
+            "(Environment > SECRET_KEY) antes de desplegar."
+        )
+    SECRET_KEY = 'dev-only-insecure-key'
+app.secret_key = SECRET_KEY
+
+# Render termina TLS en su proxy; esto permite detectar HTTPS y el host real.
+app.wsgi_app = ProxyFix(app.wsgi_app, x_for=1, x_proto=1, x_host=1)
+
+# --- COOKIES DE SESIÓN ---
+app.config.update(
+    SESSION_COOKIE_HTTPONLY=True,
+    SESSION_COOKIE_SAMESITE='Lax',
+    SESSION_COOKIE_SECURE=IS_PRODUCTION,
+    PERMANENT_SESSION_LIFETIME=timedelta(hours=8),
+    MAX_CONTENT_LENGTH=2 * 1024 * 1024,  # 2 MB
+)
 
 # --- BASE DE DATOS ---
 basedir = os.path.abspath(os.path.dirname(__file__))
 instance_path = os.path.join(basedir, 'instance')
 os.makedirs(instance_path, exist_ok=True)
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL', 'sqlite:///' + os.path.join(instance_path, 'solicitudes.db'))
+
+
+def normalizar_database_url(url):
+    """SQLAlchemy 2.x ya no acepta el esquema 'postgres://' que usaba Render."""
+    if url and url.startswith('postgres://'):
+        url = url.replace('postgres://', 'postgresql://', 1)
+    return url
+
+
+app.config['SQLALCHEMY_DATABASE_URI'] = normalizar_database_url(
+    os.environ.get('DATABASE_URL', 'sqlite:///' + os.path.join(instance_path, 'solicitudes.db'))
+)
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config['SQLALCHEMY_ENGINE_OPTIONS'] = {
+    'pool_pre_ping': True,   # evita conexiones muertas tras el idle de Render
+    'pool_recycle': 300,
+}
 db = SQLAlchemy(app)
+
+# --- CREDENCIALES DEL PANEL ---
+ADMIN_USER = os.environ.get('ADMIN_USER', 'admin')
+ADMIN_PASSWORD = os.environ.get('ADMIN_PASSWORD')
+if not ADMIN_PASSWORD:
+    if IS_PRODUCTION:
+        raise RuntimeError(
+            "ADMIN_PASSWORD no está configurada. Defínela en Render > Environment "
+            "antes de desplegar (la contraseña anterior estaba publicada en el repo)."
+        )
+    ADMIN_PASSWORD = 'althea2026'  # solo para desarrollo local
 
 # --- CONFIGURACIÓN DE RESEND ---
 RESEND_API_KEY = os.environ.get('RESEND_API_KEY', '')
@@ -202,14 +256,53 @@ def enviar_solicitud():
     
     return render_template('exito.html', nombre=nueva.razon_social)
 
+@app.route('/favicon.ico')
+def favicon():
+    return send_file(
+        os.path.join(app.root_path, 'static', 'logo.png'),
+        mimetype='image/png',
+    )
+
+
+@app.route('/healthz')
+def healthz():
+    """Health check para Render (no requiere login)."""
+    try:
+        db.session.execute(text('SELECT 1'))
+        return {'status': 'ok'}, 200
+    except Exception:
+        app.logger.exception('Health check: base de datos no disponible')
+        return {'status': 'degraded'}, 503
+
+
+@app.after_request
+def agregar_cabeceras_seguridad(response):
+    response.headers['X-Content-Type-Options'] = 'nosniff'
+    response.headers['X-Frame-Options'] = 'SAMEORIGIN'
+    response.headers['Referrer-Policy'] = 'strict-origin-when-cross-origin'
+    response.headers['Permissions-Policy'] = 'geolocation=(), microphone=(), camera=()'
+    response.headers['Content-Security-Policy'] = (
+        "default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; "
+        "script-src 'self'; base-uri 'self'; form-action 'self'; frame-ancestors 'self'"
+    )
+    if request.is_secure:
+        response.headers['Strict-Transport-Security'] = 'max-age=31536000; includeSubDomains'
+    return response
+
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
-        if request.form['usuario'] == 'admin' and request.form['clave'] == 'althea2026':
+        usuario = request.form.get('usuario', '')
+        clave = request.form.get('clave', '')
+        usuario_ok = secrets.compare_digest(usuario, ADMIN_USER)
+        clave_ok = secrets.compare_digest(clave, ADMIN_PASSWORD)
+        if usuario_ok and clave_ok:
+            session.clear()
             session['logged_in'] = True
+            session.permanent = True
             return redirect(url_for('panel'))
-        else:
-            return render_template('login.html', error="Usuario o contraseña incorrectos")
+        return render_template('login.html', error="Usuario o contraseña incorrectos")
     return render_template('login.html')
 
 @app.route('/logout')
@@ -292,7 +385,12 @@ def exportar_excel():
     return send_file(output, download_name="Solicitudes_Althea.xlsx", as_attachment=True)
 
 with app.app_context():
-    db.create_all()
+    try:
+        db.create_all()
+    except Exception:
+        # No tumbamos el proceso si la BD aún no está lista: /healthz reportará 503
+        # y Render mantendrá el servicio vivo mientras se corrige la variable DATABASE_URL.
+        app.logger.exception('No se pudo inicializar la base de datos')
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host='0.0.0.0', port=int(os.environ.get('PORT', 8501)), debug=not IS_PRODUCTION)
