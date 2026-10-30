@@ -45,10 +45,28 @@ os.makedirs(instance_path, exist_ok=True)
 
 
 def normalizar_database_url(url):
-    """SQLAlchemy 2.x ya no acepta el esquema 'postgres://' que usaba Render."""
-    if url and url.startswith('postgres://'):
-        url = url.replace('postgres://', 'postgresql://', 1)
-    return url
+    """Normaliza la URL de Render y fija el driver de PostgreSQL instalado.
+
+    - Render entrega a veces 'postgres://' (SQLAlchemy 2.x ya no lo acepta).
+    - 'postgresql://' hace que SQLAlchemy asuma psycopg2; lo dejamos explícito
+      como 'postgresql+psycopg2://' para que el error, si falta el paquete,
+      sea claro y no un ModuleNotFoundError genérico en tiempo de conexión.
+    """
+    if not url:
+        return url
+    if url.startswith('postgres://'):
+        url = 'postgresql://' + url[len('postgres://'):]
+    if url.startswith('postgresql://'):
+        try:
+            import psycopg2  # noqa: F401
+        except ImportError as exc:
+            raise RuntimeError(
+                "El driver 'psycopg2' no está instalado. Ejecuta "
+                "'pip install -r requirements.txt' y verifica que requirements.txt "
+                "esté en la raíz del repositorio (Root Directory vacío en Render)."
+            ) from exc
+        return 'postgresql+psycopg2://' + url[len('postgresql://'):]
+    return url  # SQLite u otro motor, o driver ya explícito (postgresql+psycopg://)
 
 
 app.config['SQLALCHEMY_DATABASE_URI'] = normalizar_database_url(
